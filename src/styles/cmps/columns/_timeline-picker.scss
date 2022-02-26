@@ -1,0 +1,31 @@
+.timeline-picker {
+    @include fc();
+    margin: 6px 16px;
+    .timeline-capsule {
+        flex: 1;
+        background-color: #c4c4c4;
+        color: white;
+        display: flex;
+        border-radius: 11px;
+        height: 22px;
+        position: relative;
+        span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            font-size: 12px;
+            white-space: pre;
+            color: #b2b2b2;
+        }
+
+        .history {
+            border-radius: 11px 0 0 11px;
+            background-color: turquoise;
+        }
+        .future {
+            border-radius:0 11px 11px 0;
+            background-color: #333;
+        }
+    }
+}

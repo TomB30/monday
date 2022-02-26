@@ -1,21 +1,33 @@
 <template>
-  <section class="date-picker" :class="pickerClass">
+  <section class="date-picker" :class="pickerClass" @click="toggleChoosing">
+  </section>
+</template>
   </section>
 </template>
 
 <script>
 export default {
-  props:{
-    task:Object
+  props: {
+    task: Object,
   },
-  computed:{
-    pickerClass(){
-      return this.task.date ? '' : 'empty'
+  data(){
+    return{
+      picker:null,
+      isChoosing:false
     }
-  }
-}
+  },
+  methods:{
+    toggleChoosing(){
+      this.isChoosing = !this.isChoosing
+    }
+  },
+  computed: {
+    pickerClass() {
+      return this.task.date ? "" : "empty";
+    },
+  },
+};
 </script>
 
 <style>
-
 </style>

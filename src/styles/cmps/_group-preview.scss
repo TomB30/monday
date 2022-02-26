@@ -42,6 +42,9 @@
             }
 
             >div {
+                // &:nth-child(2){
+                //     margin-inline-start: 400px;
+                // }
                 position: relative;
                 &:hover {
                     .drag-handle {
@@ -57,6 +60,7 @@
                 text-align: left;
                 line-height: 32px;
                 padding: 4px 0;
+                // position: fixed;
                 &:hover {
                     .group-title-input {
                         margin-left: 18px;

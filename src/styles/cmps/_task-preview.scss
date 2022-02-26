@@ -12,6 +12,7 @@
             text-align: left;
             display: flex;
             background-color: #f5f6f8;
+            // position: fixed;
             .left-border {
                 width: 8px;
                 margin-right: 10px;
@@ -30,6 +31,10 @@
         }
         
         .task-info {
+
+            // &:nth-child(2){
+            //     margin-inline-start: 400px;
+            // }
             border-left:1px solid white;
             background-color: #f5f6f8;
 

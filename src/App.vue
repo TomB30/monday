@@ -1,16 +1,15 @@
 <template>
-  <div id="app">
+  <section id="app">
     <app-header></app-header>
-    <router-view/>
-  </div>
+    <router-view></router-view>
+  </section>
 </template>
 
 <script>
-import appHeader from "./cmps/app-header.vue";
+import appHeader from './cmps/app-header.vue'
 export default {
-  components: {
-    appHeader,
-  },
+  components:{
+    appHeader
+  }
 };
 </script>
-

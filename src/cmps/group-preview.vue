@@ -15,7 +15,7 @@
         </div>
         <div
           v-for="(cmp, idx) in cmpsOrderToEdit"
-          :style="{ width: cmp.width + 'px' }"
+          :style="{ 'min-width': cmp.width + 'px' }"
           :key="cmp.type"
           class="cmp-title"
         >
@@ -141,6 +141,11 @@ export default {
   },
   created() {
     this.groupToEdit = JSON.parse(JSON.stringify(this.group));
+  },
+  watch: {
+    cmpsOrder: function (newVal, oldVal) {
+      this.cmpsOrderToEdit = JSON.parse(JSON.stringify(newVal));
+    },
   },
 };
 </script>

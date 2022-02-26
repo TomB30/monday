@@ -1,7 +1,7 @@
 <template>
   <div class="task-preview">
       <div class="task-title"><div :style="{'background-color':groupColor}" class="left-border"></div><span contenteditable @blur="updateTitle">{{task.title}}</span></div>
-      <div v-for="cmp in cmpsOrder" :key="cmp.type" :style="{'width': cmp.width+'px'}" class="task-info"><component :is="cmp.type" :task="task"></component></div>
+      <div v-for="cmp in cmpsOrder" :key="cmp.type" :style="{'min-width': cmp.width+'px'}" class="task-info"><component :is="cmp.type" :task="task"></component></div>
       <div class="task-info task-end"></div>
   </div>
 </template>
@@ -10,6 +10,7 @@
 import memberPicker from './columns/member-picker.vue'
 import datePicker from './columns/date-picker.vue'
 import statusPicker from './columns/status-picker.vue'
+import timelinePicker from './columns/timeline-picker.vue'
 
 export default {
     props:{
@@ -30,8 +31,9 @@ export default {
     components:{
         memberPicker,
         statusPicker,
-        datePicker
-    }
+        datePicker,
+        timelinePicker
+    },
 }
 </script>
 

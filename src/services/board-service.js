@@ -187,7 +187,7 @@ function _createBoards() {
         ],
         "colors": ['#037f4c', '#00c875', '#9cd326', '#cab641', '#ffcb00', '#784bd1', '#a25ddc', '#0086c0', '#579bfc', '#bb3354', '#e2445c', '#ff158a', '#ff5ac4', '#ff642e', '#fdab3d', '#7f5347', '#c4c4c4', '#808080'],
         // for monday
-        "cmpsOrder": [{ type: "status-picker", width: 130 }, { type: "member-picker", width: 140 }, { type: "date-picker", width: 130 }]
+        "cmpsOrder": [{ type: "status-picker", width: 130 }, { type: "member-picker", width: 140 }, {type:'timeline-picker',width:180},{ type: "date-picker", width: 130 }]
     }]
     saveBoards(boards)
     return boards

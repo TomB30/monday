@@ -1,7 +1,7 @@
 .workspace-page {
     display: flex;
     overflow-y: auto;
-
+    overflow-x: hidden;
     .board-container {
         flex-grow: 1;
     }
