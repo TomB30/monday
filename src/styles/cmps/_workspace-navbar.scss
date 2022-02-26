@@ -1,0 +1,22 @@
+.workspace-navbar {
+    width: 29px;
+    background-color: #f5f6f8;
+    border-right: 1px solid #d0d4e4;
+    position: relative;
+    .collapse-btn {
+        @include fc();
+        cursor: pointer;
+        width: 26px;
+        height: 26px;
+        border: 1px solid #d0d4e4;
+        border-radius: 50%;
+        background-color: white;
+        position: absolute;
+        top: 20px;
+        right: -13px;
+        i {
+            line-height: 26px;
+            font-size: 12px;
+        }
+    }
+}

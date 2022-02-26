@@ -1,0 +1,43 @@
+.task-list {
+    .task-preview {
+        height: 34px;
+        border-bottom: 1px solid white;
+        color: #666;
+        display: flex;
+        line-height: 34px;
+        text-align: center;
+        
+        .task-title{
+            width: 400px;
+            text-align: left;
+            display: flex;
+            background-color: #f5f6f8;
+            .left-border {
+                width: 8px;
+                margin-right: 10px;
+                margin-left: -2px;
+            }
+            span {
+                padding: 0 16px 0 0;
+                border: 1px solid transparent;
+                &:hover {
+                    border: 1px dashed #c5c7d0;
+                }
+                &:focus{
+                    outline: 1px solid #0085ff;
+                }
+            }
+        }
+        
+        .task-info {
+            border-left:1px solid white;
+            background-color: #f5f6f8;
+
+            &.task-end{
+                flex: 1;
+                min-width: 38px;
+                border-right: 8px solid #d0d4e4;
+            }
+        }
+    }
+}

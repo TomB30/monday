@@ -1,0 +1,8 @@
+.workspace-page {
+    display: flex;
+    overflow-y: auto;
+
+    .board-container {
+        flex-grow: 1;
+    }
+}

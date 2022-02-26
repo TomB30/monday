@@ -1,0 +1,11 @@
+.member-picker {
+    height: 100%;
+    @include fc();
+    >:not(:first-child){
+        margin-inline-start: -7px;
+    }
+    i{
+        font-size: 26px;
+        color: #c5c7d0;
+    }
+}

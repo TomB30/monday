@@ -1,0 +1,13 @@
+@mixin fc() {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin mkIcon($content) {
+    &::after {
+        content: $content;
+    }
+    font-family: "IconFont";
+    font-style: normal;
+}

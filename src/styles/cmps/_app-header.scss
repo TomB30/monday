@@ -1,0 +1,46 @@
+.app-header {
+    min-width: 66px;
+    height: 100vh;
+    background-color: #292f4c;
+    text-align: center;
+    padding: 10px 0;
+    nav {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        color: white;
+         
+        .navbar-icon-link {
+            @include fc();
+            height: 36px;
+            width: 36px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+
+            &:hover {
+                background-color: rgba(0,0,0,.6);
+            }
+
+            &.selected {
+                background-color: rgba(255,255,255,.3);
+                position: relative;
+                div {
+                    cursor:default;
+                    position: absolute;
+                    right: -15px;
+                    border-top: 8px solid transparent;
+                    border-right: 6px solid #f5f6f8;
+                    border-bottom: 8px solid transparent;
+                    height: 0;
+                    width: 0;
+                }
+            }
+        }
+        
+        div {
+            @include fc();
+            flex-direction: column;
+        }
+    }
+}

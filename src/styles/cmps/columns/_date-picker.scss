@@ -1,0 +1,11 @@
+.date-picker {
+    margin: 4px;
+    @include fc();
+    height: calc(100% - 8px);
+    &.empty {
+        &:hover{
+            border: 1px dashed #c5c7d0;
+            cursor: pointer;
+        }
+    }
+}
