@@ -15,7 +15,7 @@
         </div>
         <div
           v-for="(cmp, idx) in cmpsOrderToEdit"
-          :style="{ 'min-width': cmp.width + 'px' }"
+          :style="{ 'min-width': cmp.minWidth + 'px', width: cmp.width + 'px' }"
           :key="cmp.type"
           class="cmp-title"
         >
@@ -43,6 +43,7 @@
           :task="task"
           :key="task.id"
           @updateTask="updateTask"
+          @setModal="setModal($event, task)"
         ></task-preview>
         <div class="add-task">
           <div
@@ -58,12 +59,20 @@
         </div>
       </div>
     </div>
+    <component
+      v-if="modal"
+      :is="modal.type"
+      :pos="modal.pos"
+      :task="modal.task"
+    ></component>
   </section>
 </template>
 
 <script>
 import { boardService } from "../services/board-service";
 import taskPreview from "./task-preview.vue";
+import memberModal from "./modals/member-modal.vue";
+import statusModal from "./modals/status-modal.vue";
 
 export default {
   props: {
@@ -73,10 +82,11 @@ export default {
   data() {
     return {
       groupToEdit: null,
-      taskTitle: "",
+      cmpsOrderToEdit: JSON.parse(JSON.stringify(this.cmpsOrder)),
+      modal: null,
       resizePos: null,
       resizeIdx: null,
-      cmpsOrderToEdit: JSON.parse(JSON.stringify(this.cmpsOrder)),
+      taskTitle: "",
     };
   },
   methods: {
@@ -130,6 +140,14 @@ export default {
         JSON.parse(JSON.stringify(this.cmpsOrderToEdit))
       );
     },
+    setModal(modal, task) {
+      if (this.modal && this.modal.task.id === task.id && this.modal.type === modal.type) {
+        this.modal = null;
+        return;
+      }
+      modal.task = task;
+      this.modal = modal;
+    },
   },
   computed: {
     buttonStyle(ev) {
@@ -138,6 +156,8 @@ export default {
   },
   components: {
     taskPreview,
+    memberModal,
+    statusModal,
   },
   created() {
     this.groupToEdit = JSON.parse(JSON.stringify(this.group));

@@ -1,42 +1,77 @@
 <template>
   <div class="task-preview">
-      <div class="task-title"><div :style="{'background-color':groupColor}" class="left-border"></div><span contenteditable @blur="updateTitle">{{task.title}}</span></div>
-      <div v-for="cmp in cmpsOrder" :key="cmp.type" :style="{'min-width': cmp.width+'px'}" class="task-info"><component :is="cmp.type" :task="task"></component></div>
-      <div class="task-info task-end"></div>
+    <div class="task-title">
+      <div
+        :style="{ 'background-color': groupColor }"
+        class="left-border"
+      ></div>
+      <span contenteditable @blur="setVal('title',$event.target.innerText)">{{ task.title }}</span>
+    </div>
+    <div
+      v-for="cmp in cmpsOrder"
+      :key="cmp.type"
+      :style="{ 'min-width': cmp.minWidth + 'px', width: cmp.width + 'px' }"
+      class="task-info"
+      @click="openModal($event, cmp.type)"
+    >
+      <component
+        :is="cmp.type"
+        :task="task"
+        :color="groupColor"
+        @setVal="setVal"
+      ></component>
+    </div>
+    <div class="task-info task-end"></div>
   </div>
 </template>
 
 <script>
-import memberPicker from './columns/member-picker.vue'
-import datePicker from './columns/date-picker.vue'
-import statusPicker from './columns/status-picker.vue'
-import timelinePicker from './columns/timeline-picker.vue'
+import memberPicker from "./columns/member-picker.vue";
+import datePicker from "./columns/date-picker.vue";
+import statusPicker from "./columns/status-picker.vue";
+import timelinePicker from "./columns/timeline-picker.vue";
 
 export default {
-    props:{
-        task:Object,
-        cmpsOrder:Array,
-        groupColor:String
+  props: {
+    task: Object,
+    cmpsOrder: Array,
+    groupColor: String,
+  },
+  data() {
+    return {};
+  },
+  methods: {
+    updateTitle(ev) {
+      const taskTitle = ev.target.innerText;
+      const taskCopy = JSON.parse(
+        JSON.stringify({ ...this.task, title: taskTitle })
+      );
+      this.updateTask(taskCopy);
     },
-    methods:{
-        updateTitle(ev){
-            const taskTitle = ev.target.innerText
-            const taskCopy = JSON.parse(JSON.stringify({...this.task, title:taskTitle}))
-            this.updateTask(taskCopy)
-        },
-        updateTask(updatedTask){
-            this.$emit('updateTask', updatedTask)
-        }
+    updateTask(updatedTask) {
+      this.$emit("updateTask", updatedTask);
     },
-    components:{
-        memberPicker,
-        statusPicker,
-        datePicker,
-        timelinePicker
+    openModal(ev, type) {
+      if (type === "timeline-picker" || type === "date-picker") return;
+      const { x, y, height } = ev.target.getBoundingClientRect();
+      const pos = { x, y: y + height + 5 };
+      const modal = {
+        type: type.split("-")[0] + "-modal",
+        pos,
+      };
+      this.$emit("setModal", modal);
     },
-}
+    setVal(key, val) {
+      const taskCopy = JSON.parse(JSON.stringify({ ...this.task, [key]: val }));
+      this.updateTask(taskCopy);
+      console.log(taskCopy);
+    },
+  },
+  components: {
+    memberPicker,
+    statusPicker,
+    datePicker,
+    timelinePicker,
+  },
+};
 </script>
-
-<style>
-
-</style>

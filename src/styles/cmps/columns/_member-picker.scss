@@ -1,4 +1,5 @@
 .member-picker {
+    cursor: pointer;
     height: 100%;
     @include fc();
     >:not(:first-child){
