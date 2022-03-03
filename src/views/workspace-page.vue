@@ -3,8 +3,8 @@
     <workspace-navbar></workspace-navbar>
     <section class="board-container">
       <board-header></board-header>
-      <board-toolbar></board-toolbar>
-      <group-list v-if="selectedBoard" :board="selectedBoard" @addGroup="addGroup" @updateGroup="updateGroup" @saveCmpsOrder="saveCmpsOrder"></group-list>
+      <board-toolbar @addTask="addTask"></board-toolbar>
+      <group-list v-if="selectedBoard" :board="selectedBoard" @updateBoard="updateBoard"></group-list>
     </section>
   </section>
 </template>
@@ -14,6 +14,7 @@ import workspaceNavbar from "../cmps/workspace-navbar.vue";
 import boardHeader from "../cmps/board-header.vue";
 import boardToolbar from "../cmps/board-toolbar.vue";
 import groupList from "../cmps/group-list.vue";
+import { boardService } from "../services/board-service";
 
 export default {
   data() {
@@ -23,26 +24,34 @@ export default {
     }
   },
   methods:{
-    addGroup(newGroup){
-      const boardCopy = JSON.parse(JSON.stringify(this.selectedBoard))
-      boardCopy.groups.push(newGroup)
-      this.updateBoard(boardCopy)
+    addTask(){
+      const task = boardService.getEmptyTask()
+      task.title = 'New Item'
+      this.selectedBoard.groups[0].tasks.unshift(task)
+      this.updateBoard()
     },
-    updateGroup(updatedGroup){
-      const boardCopy = JSON.parse(JSON.stringify(this.selectedBoard))
-      const groupIdx = boardCopy.groups.findIndex(group => group.id === updatedGroup.id)
-      boardCopy.groups.splice(groupIdx,1,updatedGroup)
-      this.updateBoard(boardCopy)
-    },
-    async updateBoard(updatedBoard){
-      this.$store.dispatch('updateBoard',{board:updatedBoard})
+    // addGroup(newGroup){
+    //   this.selectedBoard.groups.push(newGroup)
+    //   this.updateBoard()
+    // },
+    // updateGroup(updatedGroup){
+    //   const groupIdx = this.selectedBoard.groups.findIndex(group => group.id === updatedGroup.id)
+    //   this.selectedBoard.groups.splice(groupIdx,1,updatedGroup)
+    //   this.updateBoard()
+    // },
+    async updateBoard(key,val){
+      this.selectedBoard[key] = val
+      this.$store.dispatch('updateBoard',{board:this.selectedBoard})
       this.selectedBoard = this.$store.getters.selectedBoard
     },
-    saveCmpsOrder(cmpsOrder){
-      const boardCopy = JSON.parse(JSON.stringify(this.selectedBoard))
-      boardCopy.cmpsOrder = cmpsOrder
-      this.updateBoard(boardCopy)
-    }
+    // saveCmpsOrder(cmpsOrder){
+    //   this.selectedBoard.cmpsOrder = cmpsOrder
+    //   this.updateBoard()
+    // },
+    // updateGroups(groups){
+    //   this.selectedBoard.groups = groups
+    //   this.updateBoard()
+    // }
   },
   computed:{
 
@@ -51,7 +60,7 @@ export default {
     try {
       await this.$store.dispatch('loadBoards')
       this.boardIds = this.$store.getters.boards;
-      this.selectedBoard = this.$store.getters.selectedBoard;
+      this.selectedBoard =  this.$store.getters.selectedBoard;
     } catch (err) {
       console.log(`could't load board`, err);
     }

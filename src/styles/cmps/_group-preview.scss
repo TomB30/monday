@@ -24,7 +24,7 @@
     .group-table {
         margin-left: 22px;
 
-        .titles {
+        .titles,.drag-container {
             height: 40px;
             display: flex;
             align-items: center;
@@ -41,7 +41,7 @@
                 background-color: #d0d4e4;
             }
 
-            >div {
+            >div:not(.drag-container) {
                 // &:nth-child(2){
                 //     margin-inline-start: 400px;
                 // }

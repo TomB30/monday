@@ -1,7 +1,7 @@
 import { utilService } from "./util-service.js"
-import { storageService } from "./storage-service.js"
+import { storageService } from "./async-storage-service.js"
 const BOARDS_KEY = 'boardsDB'
-var gBoards = loadBoardsFromStorage() || _createBoards()
+// var gBoards = loadBoardsFromStorage() || _createBoards()
 
 export const boardService = {
     getEmptyBoard,
@@ -13,40 +13,24 @@ export const boardService = {
 }
 
 function loadBoards() {
-    const boardIds = gBoards.map(board => board._id)
-    return Promise.resolve(boardIds)
+    return storageService.query(BOARDS_KEY).then(boards => {
+        if(!boards.length) { 
+            console.log(boards);  
+            return storageService.postMany(BOARDS_KEY,_createBoards())
+        }
+        return boards
+    })
 }
 
 function getBoardById(boardId) {
-    const board = gBoards.find(board => board._id === boardId)
-    return Promise.resolve(board)
+    return storageService.get(BOARDS_KEY,boardId)
 }
 
 function save(board) {
-    if (board._id) _update(board)
-    else _create(board)
+    if (board._id) return storageService.put(BOARDS_KEY,board)
+    else return storageService.post(BOARDS_KEY,board)
 }
 
-
-function _update(boardToUpdate) {
-    const boardIdx = gBoards.findIndex(board => board._id === boardToUpdate._id)
-    boardToUpdate.updatedAt = Date.now()
-    gBoards.splice(boardIdx, 1, boardToUpdate)
-    saveBoards()
-    return Promise.resolve(boardToUpdate)
-}
-
-function _create(boardToCreate) {
-    boardToCreate = {
-        ...boardToCreate,
-        createdAt: Date.now(),
-        updatedAt: Date.now(),
-        _id: utilService.makeId()
-    }
-    gBoards.push(boardToCreate)
-    saveBoards()
-    return Promise.resolve(boardToCreate)
-}
 
 function _createBoards() {
     const boards = [{
@@ -185,7 +169,7 @@ function _createBoards() {
         // for monday
         "cmpsOrder": [{ type: "status-picker", width: 130 , minWidth:90 }, { type: "member-picker", width: 140 , minWidth:100}, {type:'timeline-picker',width:180, minWidth:180},{ type: "date-picker", width: 130 ,minWidth:100}]
     }]
-    saveBoards(boards)
+    // saveBoards(boards)
     return boards
 }
 

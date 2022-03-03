@@ -3,20 +3,20 @@ import { boardService } from "../services/board-service"
 
 export const boardStore = {
     state: {
-        boardIds: [],
+        boards: [],
         selectedBoard: null
     },
     getters: {
         selectedBoard({ selectedBoard }) {
-            return selectedBoard
+            return JSON.parse(JSON.stringify(selectedBoard))
         },
         boards({ boardIds }) {
             return boardIds
         }
     },
     mutations: {
-        setBoards(state, { boardIds }) {
-            state.boardIds = boardIds
+        setBoards(state, { boards }) {
+            state.boards = boards
         },
         setBoard(state, { board }) {
             state.selectedBoard = board
@@ -25,12 +25,12 @@ export const boardStore = {
     actions: {
         async loadBoards({ commit, state }) {
             try {
-                const boardIds = await boardService.loadBoards()
+                const boards = await boardService.loadBoards()
+                console.log(boards);
                 if (!state.selectedBoard) {
-                    const board = await boardService.getBoardById(boardIds[0])
-                    commit({ type: 'setBoard', board })
+                    commit({ type: 'setBoard', board:boards[0] })
                 }
-                commit({ type: 'setBoards', boardIds })
+                commit({ type: 'setBoards', boards })
             } catch (err) {
                 console.log('Couldn\'t load boards', err);
             }
@@ -47,7 +47,7 @@ export const boardStore = {
             const prevBoard = state.selectedBoard
             commit({ type: 'setBoard', board })
             try {
-                const updatedBoard = await boardService.save(JSON.parse(JSON.stringify(board)))
+                const updatedBoard = await boardService.save(board)
             } catch (err) {
                 console.log(`couldn't save board ${board._id} , ${err}`);
                 commit({ type: 'setBoard', prevBoard })

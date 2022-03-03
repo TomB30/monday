@@ -4,7 +4,7 @@
 
 body {
     margin: 0;
-    font-family: 'Roboto';
+    font-family: "Roboto";
     color: #323338;
     font-size: 14px;
     overflow-y: hidden;
@@ -13,7 +13,7 @@ body {
 
 #app {
     display: flex;
-    >:nth-child(2){
+    > :nth-child(2) {
         flex-grow: 1;
     }
 }
@@ -21,7 +21,7 @@ body {
 button {
     font-family: inherit;
     font-size: 14px;
-    background:none;
+    background: none;
     border: none;
 }
 
@@ -34,7 +34,7 @@ button {
     display: flex;
     flex-direction: column;
     position: fixed;
-    &.group-modal{
+    &.group-modal {
         position: absolute;
     }
     border-radius: 8px;
@@ -53,13 +53,13 @@ button {
         padding: 4px 8px;
         line-height: 24px;
         border-radius: 4px;
-        transition: background-color .2s;
+        transition: background-color 0.2s;
         img {
             width: 15px;
         }
-        :first-child{
+        :first-child {
             margin-inline-end: 8px;
-            &:not(img){
+            &:not(img) {
                 width: 15px;
             }
         }
@@ -75,6 +75,15 @@ a {
     text-decoration: none;
 }
 
-h1,h2,h3,h4,h5,h6 {
-    margin: 0 0 0 .5rem;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0 0 0 0.5rem;
+}
+
+.sortable-ghost {
+    opacity: 0.5;
 }

@@ -29,6 +29,16 @@
                 }
             }
         }
+        // &:hover{
+        //     .task-options {
+        //         display: block;
+        //     }
+        // }
+
+        .task-options {
+            position: absolute;
+            left: 0;
+        }
         
         .task-info {
 

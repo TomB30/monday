@@ -13,29 +13,48 @@
             {{ group.title }}
           </div>
         </div>
-        <div
-          v-for="(cmp, idx) in cmpsOrderToEdit"
-          :style="{ 'min-width': cmp.minWidth + 'px', width: cmp.width + 'px' }"
-          :key="cmp.type"
-          class="cmp-title"
+        <draggable
+          v-model="cmpsOrderToEdit"
+          handle=".drag-handle"
+          @end="saveCmpsOrder"
+          class="drag-container"
+          ghost-class="ghost"
+          drag-class="ghost"
+          animation="500"
         >
-          <img
-            class="drag-handle"
-            src="@/assets/icons/drag-handle.png"
-            alt=""
-          />
-          {{ cmp.type.split("-")[0] }}
           <div
-            class="resize-border"
-            @mousedown="setResizing($event, idx)"
-            @mouseup="setResizing"
-          ></div>
-        </div>
+            v-for="(cmp, idx) in cmpsOrderToEdit"
+            :style="{
+              'min-width': cmp.minWidth + 'px',
+              width: cmp.width + 'px',
+            }"
+            :key="cmp.type"
+            class="cmp-title"
+          >
+            <img
+              class="drag-handle"
+              src="@/assets/icons/drag-handle.png"
+              alt=""
+            />
+            {{ cmp.type.split("-")[0] }}
+            <div
+              class="resize-border"
+              @mousedown="setResizing($event, idx)"
+              @mouseup="setResizing"
+            ></div>
+          </div>
+        </draggable>
         <div class="add-column-btn">
           <i class="icon-plus-big"></i>
         </div>
       </div>
-      <div class="task-list">
+      <draggable
+        class="task-list"
+        group="tasks"
+        v-model="groupToEdit.tasks"
+        @end="updateGroup"
+        draggable=".task-preview"
+      >
         <task-preview
           v-for="task in group.tasks"
           :groupColor="group.color"
@@ -54,10 +73,11 @@
             type="text"
             placeholder="+ Add Item"
             v-model="taskTitle"
+            @keyup.enter="addTask"
           /><button ref="btn" class="add-task-btn" @click="addTask">Add</button>
           <div class="right-border"></div>
         </div>
-      </div>
+      </draggable>
     </div>
     <component
       v-if="modal"
@@ -73,6 +93,7 @@ import { boardService } from "../services/board-service";
 import taskPreview from "./task-preview.vue";
 import memberModal from "./modals/member-modal.vue";
 import statusModal from "./modals/status-modal.vue";
+import draggable from "vuedraggable";
 
 export default {
   props: {
@@ -82,7 +103,7 @@ export default {
   data() {
     return {
       groupToEdit: null,
-      cmpsOrderToEdit: JSON.parse(JSON.stringify(this.cmpsOrder)),
+      cmpsOrderToEdit: null,
       modal: null,
       resizePos: null,
       resizeIdx: null,
@@ -106,7 +127,7 @@ export default {
       this.updateGroup();
     },
     updateGroup() {
-      this.$emit("updateGroup", JSON.parse(JSON.stringify(this.groupToEdit)));
+      this.$emit("updateGroup", this.groupToEdit);
     },
     openModal(ev) {
       this.$emit("openModal", ev);
@@ -118,7 +139,6 @@ export default {
       this.updateGroup();
     },
     setResizing({ type, x, offsetX }, idx) {
-      console.log("hey", type, x);
       if (type === "mousedown" && offsetX < 8) {
         this.resizePos = x;
         this.resizeIdx = idx;
@@ -137,11 +157,15 @@ export default {
     saveCmpsOrder() {
       this.$emit(
         "saveCmpsOrder",
-        JSON.parse(JSON.stringify(this.cmpsOrderToEdit))
+        this.cmpsOrderToEdit
       );
     },
     setModal(modal, task) {
-      if (this.modal && this.modal.task.id === task.id && this.modal.type === modal.type) {
+      if (
+        this.modal &&
+        this.modal.task.id === task.id &&
+        this.modal.type === modal.type
+      ) {
         this.modal = null;
         return;
       }
@@ -158,13 +182,21 @@ export default {
     taskPreview,
     memberModal,
     statusModal,
-  },
-  created() {
-    this.groupToEdit = JSON.parse(JSON.stringify(this.group));
+    draggable,
   },
   watch: {
-    cmpsOrder: function (newVal, oldVal) {
-      this.cmpsOrderToEdit = JSON.parse(JSON.stringify(newVal));
+    cmpsOrder: {
+      handler(newVal, oldVal) {
+        this.cmpsOrderToEdit = JSON.parse(JSON.stringify(newVal));
+      },
+      immediate:true
+    },
+    group: {
+      handler(newVal) {
+        this.groupToEdit = JSON.parse(JSON.stringify(this.group));
+      },
+      deep: true,
+      immediate: true,
     },
   },
 };

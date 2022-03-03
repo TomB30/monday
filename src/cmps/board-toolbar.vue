@@ -35,7 +35,7 @@ export default {
       console.log(modalType);
     },
     addTask(){
-      console.log('Task Added');
+      this.$emit('addTask')
     }
   }
 };
