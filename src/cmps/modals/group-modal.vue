@@ -1,5 +1,5 @@
 <template>
-  <section class="group-modal modal" :style="{'top':pos.y+'px','left':pos.x+'px'}" @click="closeModal">
+  <section class="group-modal modal" :style="{'top':openPos.y+'px','left':openPos.x+'px'}" @click="closeModal">
     <section class="modal-section">
       <div class="modal-item">
         <img src="@/assets/icons/collapse-group.png" alt="" /><span
@@ -19,7 +19,7 @@
       <div class="modal-item" @click="addGroup">
         <i class="icon-plus-big"></i><span>Add group</span>
       </div>
-      <div class="modal-item">
+      <div class="modal-item" @click="duplicateGroup">
         <i class="icon-duplicate"></i><span>Duplicate this group</span>
       </div>
       <div class="modal-item">
@@ -38,7 +38,7 @@
       </div>
     </section>
     <section class="modal-section">
-      <div class="modal-item">
+      <div class="modal-item" @click="removeGroup">
         <i class="icon-delete"></i><span>Delete</span>
       </div>
     </section>
@@ -57,9 +57,21 @@ export default {
         },
         closeModal(){
             this.$emit('openModal')
+        },
+        removeGroup(){
+          this.$emit('removeGroup')
+        },
+        duplicateGroup(){
+          this.$emit('addGroup',this.group)
         }
     },
-    created(){
-    }
+    computed:{
+      openPos(){
+        if(this.pos.y + 388 < window.innerHeight) return this.pos
+        const diff = this.pos.y + 388 - innerHeight
+        const newPos = {x:this.pos.x , y : this.pos.y - 388 - 35}
+        return newPos
+      }
+    },
 };
 </script>

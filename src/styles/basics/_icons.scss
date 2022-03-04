@@ -28,6 +28,9 @@
 .icon-right-arrow {
    @include mkIcon('\f109')
 }
+.icon-left-arrow {
+   @include mkIcon('\f108')
+}
 .icon-down-arrow {
    @include mkIcon('\f106')
 }
@@ -70,4 +73,7 @@
 }
 .icon-delete {
    @include mkIcon('\f2ff')
+}
+.icon-x {
+   @include mkIcon('\f22c')
 }

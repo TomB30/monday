@@ -1,8 +1,9 @@
 .workspace-navbar {
-    width: 29px;
+    min-width: 29px;
     background-color: #f5f6f8;
     border-right: 1px solid #d0d4e4;
     position: relative;
+    transition: min-width 0.2s;
     .collapse-btn {
         @include fc();
         cursor: pointer;
@@ -17,6 +18,59 @@
         i {
             line-height: 26px;
             font-size: 12px;
+        }
+    }
+
+    &.open {
+        padding: 16px;
+        min-width: 254px;
+    }
+
+    .workspace-name {
+        padding: 6px;
+        border: 1px solid black;
+        border-radius: 4px;
+    }
+
+    .navbar-btns {
+        padding: 16px 0;
+        border-bottom: 1px solid #d0d4e4;
+        > div {
+            cursor: pointer;
+            display: flex;
+            padding-left: 6px;
+            line-height: 32px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+
+            i {
+                width: 19px;
+            }
+            &:hover {
+                background-color: #e6e9ef;
+            }
+        }
+    }
+    .board-btns {
+        padding: 16px 0;
+        .board-btn {
+            transition: background-color 0.3s;
+            cursor: pointer;
+            padding-left: 6px;
+            display: flex;
+            align-items: center;
+            line-height: 31px;
+            border-radius: 4px;
+            img {
+                margin-right: 4px;
+            }
+            &.selected {
+                background-color: #cce5ff;
+            }
+
+            &:hover {
+                background-color: #e6e9ef;
+            }
         }
     }
 }

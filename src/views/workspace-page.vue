@@ -2,7 +2,7 @@
   <section class="workspace-page">
     <workspace-navbar></workspace-navbar>
     <section class="board-container">
-      <board-header></board-header>
+      <board-header @setVal="updateBoard"></board-header>
       <board-toolbar @addTask="addTask"></board-toolbar>
       <group-list v-if="selectedBoard" :board="selectedBoard" @updateBoard="updateBoard"></group-list>
     </section>
@@ -30,28 +30,11 @@ export default {
       this.selectedBoard.groups[0].tasks.unshift(task)
       this.updateBoard()
     },
-    // addGroup(newGroup){
-    //   this.selectedBoard.groups.push(newGroup)
-    //   this.updateBoard()
-    // },
-    // updateGroup(updatedGroup){
-    //   const groupIdx = this.selectedBoard.groups.findIndex(group => group.id === updatedGroup.id)
-    //   this.selectedBoard.groups.splice(groupIdx,1,updatedGroup)
-    //   this.updateBoard()
-    // },
     async updateBoard(key,val){
       this.selectedBoard[key] = val
       this.$store.dispatch('updateBoard',{board:this.selectedBoard})
       this.selectedBoard = this.$store.getters.selectedBoard
     },
-    // saveCmpsOrder(cmpsOrder){
-    //   this.selectedBoard.cmpsOrder = cmpsOrder
-    //   this.updateBoard()
-    // },
-    // updateGroups(groups){
-    //   this.selectedBoard.groups = groups
-    //   this.updateBoard()
-    // }
   },
   computed:{
 

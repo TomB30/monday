@@ -45,13 +45,6 @@ export default {
     };
   },
   methods: {
-    updateTitle(ev) {
-      const taskTitle = ev.target.innerText;
-      const taskCopy = JSON.parse(
-        JSON.stringify({ ...this.task, title: taskTitle })
-      );
-      this.updateTask(taskCopy);
-    },
     updateTask(updatedTask) {
       this.$emit("updateTask", updatedTask);
     },
@@ -62,13 +55,15 @@ export default {
       const modal = {
         type: type.split("-")[0] + "-modal",
         pos,
+        info:{
+          task:this.task
+        }
       };
       this.$emit("setModal", modal);
     },
     setVal(key, val) {
       const taskCopy = JSON.parse(JSON.stringify({ ...this.task, [key]: val }));
       this.updateTask(taskCopy);
-      console.log(taskCopy);
     },
   },
   components: {

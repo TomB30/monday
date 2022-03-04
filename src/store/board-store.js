@@ -10,8 +10,8 @@ export const boardStore = {
         selectedBoard({ selectedBoard }) {
             return JSON.parse(JSON.stringify(selectedBoard))
         },
-        boards({ boardIds }) {
-            return boardIds
+        boards({ boards }) {
+            return boards
         }
     },
     mutations: {
@@ -19,6 +19,7 @@ export const boardStore = {
             state.boards = boards
         },
         setBoard(state, { board }) {
+            state.boards = state.boards.map(b => b._id !== board._id ? b : board)
             state.selectedBoard = board
         }
     },
@@ -26,7 +27,6 @@ export const boardStore = {
         async loadBoards({ commit, state }) {
             try {
                 const boards = await boardService.loadBoards()
-                console.log(boards);
                 if (!state.selectedBoard) {
                     commit({ type: 'setBoard', board:boards[0] })
                 }

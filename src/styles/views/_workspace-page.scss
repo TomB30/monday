@@ -4,5 +4,8 @@
     overflow-x: hidden;
     .board-container {
         flex-grow: 1;
+        height: 100vh;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 }

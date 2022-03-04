@@ -9,7 +9,7 @@
             src="@/assets/icons/drag-handle.png"
             alt=""
           />
-          <div class="group-title-input" contenteditable @blur="updateTitle">
+          <div class="group-title-input" contenteditable @blur="updateTitle" @keyup.enter="$event.target.blur()">
             {{ group.title }}
           </div>
         </div>
@@ -54,6 +54,7 @@
         v-model="groupToEdit.tasks"
         @end="updateGroup"
         draggable=".task-preview"
+        animation="400"
       >
         <task-preview
           v-for="task in group.tasks"
@@ -84,6 +85,7 @@
       :is="modal.type"
       :pos="modal.pos"
       :task="modal.task"
+      @updateTask="updateTask($event,true)"
     ></component>
   </section>
 </template>
@@ -122,6 +124,7 @@ export default {
       this.updateGroup();
     },
     updateTitle(ev) {
+      if(this.groupToEdit.title === ev.target.innerText) return
       const groupTitle = ev.target.innerText;
       this.groupToEdit.title = groupTitle;
       this.updateGroup();
@@ -132,10 +135,11 @@ export default {
     openModal(ev) {
       this.$emit("openModal", ev);
     },
-    updateTask(task) {
+    updateTask(task,isModal) {
       this.groupToEdit.tasks = this.groupToEdit.tasks.map((t) =>
         t.id === task.id ? task : t
       );
+      if(isModal) this.modal.task = task
       this.updateGroup();
     },
     setResizing({ type, x, offsetX }, idx) {

@@ -2,7 +2,7 @@
   <section class="board-header-container">
     <header class="board-header">
       <div class="title-container">
-        <h1 contenteditable class="board-title">Board Title</h1>
+        <h1 contenteditable class="board-title" @blur="changeTitle">{{boardTitle}}</h1>
         <i :class="infoIconClass" @click="toggleDesc"></i>
         <i class="icon-star"></i>
       </div>
@@ -35,6 +35,9 @@ export default {
   computed:{
       infoIconClass(){
           return this.isDescOpen ? 'icon-info-full' : 'icon-info'
+      },
+      boardTitle(){
+        return this.$store.getters.selectedBoard?.title
       }
   },
   methods:{
@@ -47,6 +50,9 @@ export default {
           var sel = window.getSelection()
           sel.removeAllRanges()
           sel.addRange(range)
+      },
+      changeTitle(ev){
+        this.$emit('setVal','title',ev.target.innerText)
       }
   }
 };

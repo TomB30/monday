@@ -7,15 +7,15 @@
       @end="updateGroups"
       animation="400"
     >
-        <group-preview
-          v-for="group in board.groups"
-          :group="group"
-          :cmpsOrder="board.cmpsOrder"
-          :key="group.id"
-          @updateGroup="updateGroup"
-          @openModal="openModal($event, group)"
-          @saveCmpsOrder="saveCmpsOrder"
-        ></group-preview>
+      <group-preview
+        v-for="group in board.groups"
+        :group="group"
+        :cmpsOrder="board.cmpsOrder"
+        :key="group.id"
+        @updateGroup="updateGroup"
+        @openModal="openModal($event, group)"
+        @saveCmpsOrder="saveCmpsOrder"
+      ></group-preview>
     </draggable>
     <div class="add-group" @click="addGroup" :style="{ color: newGroup.color }">
       <h2>+ Add new group</h2>
@@ -26,6 +26,7 @@
       :group="selectedGroup"
       @addGroup="addGroup"
       @openModal="openModal"
+      @removeGroup="removeGroup"
     ></group-modal>
   </section>
 </template>
@@ -50,10 +51,23 @@ export default {
     };
   },
   methods: {
-    addGroup() {
-      const groupToAdd = JSON.parse(
-        JSON.stringify({ ...this.newGroup, createdAt: Date.now() })
+    removeGroup() {
+      this.groupsToEdit = this.groupsToEdit.filter(
+        (group) => group.id !== this.selectedGroup.id
       );
+      this.selectedGroup = null;
+      this.updateGroups();
+    },
+    addGroup(group) {
+      let groupToAdd;
+      if (group?.color) {
+        groupToAdd = JSON.parse(JSON.stringify(group));
+        groupToAdd.id = utilService.makeId();
+        groupToAdd.title += ' (Copy)'
+      } else {
+        groupToAdd = JSON.parse(JSON.stringify({ ...this.newGroup }));
+      }
+      groupToAdd.createdAt = Date.now();
       this.groupsToEdit.push(groupToAdd);
       this.updateGroups();
       this.prepareNewGroup();
@@ -69,7 +83,6 @@ export default {
       const randomIdx = utilService.getRandomInt(0, this.board.colors.length);
       const color = this.board.colors[randomIdx];
       const group = boardService.getEmptyGroup();
-      console.log("group.id:", group.id);
       this.newGroup = { ...group, color };
     },
     openModal(ev, group) {
@@ -85,11 +98,7 @@ export default {
       this.$emit("updateBoard", "cmpsOrder", cmpsOrder);
     },
     updateGroups() {
-      this.$emit(
-        "updateBoard",
-        "groups",
-        this.groupsToEdit
-      );
+      this.$emit("updateBoard", "groups", this.groupsToEdit);
     },
   },
   created() {
@@ -103,7 +112,6 @@ export default {
   watch: {
     board: {
       handler(newVal) {
-        console.log("changed");
         this.groupsToEdit = JSON.parse(JSON.stringify(newVal.groups));
       },
       immediate: true,

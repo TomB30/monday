@@ -1,7 +1,10 @@
 .group-list {
     padding: 18px 30px 40px 22px;
     overflow-x: auto;
-    width: calc(100vw - 66px - 29px);
+    max-width: calc(100vw - 66px - 29px);
+    height: calc(100vh - 150px);
+    display: flex;
+    flex-direction: column;
     .add-group {
         cursor: pointer;
         margin-top: 18px;

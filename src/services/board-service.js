@@ -1,7 +1,9 @@
 import { utilService } from "./util-service.js"
 import { storageService } from "./async-storage-service.js"
+import { httpService } from "./http-service.js"
+import { end } from "cheerio/lib/api/traversing"
 const BOARDS_KEY = 'boardsDB'
-// var gBoards = loadBoardsFromStorage() || _createBoards()
+const endpoint = 'board/'
 
 export const boardService = {
     getEmptyBoard,
@@ -13,28 +15,29 @@ export const boardService = {
 }
 
 function loadBoards() {
-    return storageService.query(BOARDS_KEY).then(boards => {
-        if(!boards.length) { 
-            console.log(boards);  
-            return storageService.postMany(BOARDS_KEY,_createBoards())
+    return httpService.get(endpoint).then(boards=> {
+        if(!boards || !boards.length){
+            console.log('no boards found');
+            const board = _createBoard()
+            return httpService.post(endpoint,{board}).then(board => [board])
+        }else {
+            return boards
         }
-        return boards
     })
 }
 
 function getBoardById(boardId) {
-    return storageService.get(BOARDS_KEY,boardId)
+    return storageService.get(BOARDS_KEY, boardId)
 }
 
 function save(board) {
-    if (board._id) return storageService.put(BOARDS_KEY,board)
-    else return storageService.post(BOARDS_KEY,board)
+    if (board._id) return httpService.put(endpoint, {board})
+    else return httpService.post(endpoint, {board})
 }
 
 
-function _createBoards() {
-    const boards = [{
-        "_id": "b101",
+function _createBoard() {
+    return {
         "title": "Robot dev proj",
         "description": "Add a description",
         "createdAt": 1589983468418,
@@ -167,10 +170,8 @@ function _createBoards() {
         ],
         "colors": ['#037f4c', '#00c875', '#9cd326', '#cab641', '#ffcb00', '#784bd1', '#a25ddc', '#0086c0', '#579bfc', '#bb3354', '#e2445c', '#ff158a', '#ff5ac4', '#ff642e', '#fdab3d', '#7f5347', '#c4c4c4', '#808080'],
         // for monday
-        "cmpsOrder": [{ type: "status-picker", width: 130 , minWidth:90 }, { type: "member-picker", width: 140 , minWidth:100}, {type:'timeline-picker',width:180, minWidth:180},{ type: "date-picker", width: 130 ,minWidth:100}]
-    }]
-    // saveBoards(boards)
-    return boards
+        "cmpsOrder": [{ type: "status-picker", width: 130, minWidth: 90 }, { type: "member-picker", width: 140, minWidth: 100 }, { type: 'timeline-picker', width: 180, minWidth: 180 }, { type: "date-picker", width: 130, minWidth: 100 }]
+    }
 }
 
 
@@ -202,7 +203,7 @@ function getEmptyTask() {
     return {
         id: utilService.makeId(),
         title: 'New Task',
-        members:[]
+        members: []
     }
 }
 
