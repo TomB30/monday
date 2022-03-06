@@ -25,23 +25,14 @@
             span {
                 padding: 0 16px 0 0;
                 border: 1px solid transparent;
+                border-radius: 4px;
                 &:hover {
-                    border: 1px dashed #c5c7d0;
+                    border: 1px solid #c5c7d0;
                 }
                 &:focus{
                     outline: 1px solid #0085ff;
                 }
             }
-        }
-        // &:hover{
-        //     .task-options {
-        //         display: block;
-        //     }
-        // }
-
-        .task-options {
-            position: absolute;
-            left: 0;
         }
         
         .task-info {

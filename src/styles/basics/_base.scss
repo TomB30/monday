@@ -23,6 +23,7 @@ button {
     font-size: 14px;
     background: none;
     border: none;
+    color: inherit;
 }
 
 .monday-logo {
@@ -34,9 +35,6 @@ button {
     display: flex;
     flex-direction: column;
     position: fixed;
-    &.group-modal {
-        position: absolute;
-    }
     border-radius: 8px;
     background-color: #fff;
     color: #323338;
@@ -46,7 +44,7 @@ button {
         border-bottom: 1px solid #e6e9ef;
         padding: 8px;
     }
-    .modal-item {
+    .modal-item,.color-picker {
         @include divToBtn();
         display: flex;
         align-items: center;

@@ -9,7 +9,7 @@
             src="@/assets/icons/drag-handle.png"
             alt=""
           />
-          <div class="group-title-input" contenteditable @blur="updateTitle" @keyup.enter="$event.target.blur()">
+          <div class="group-title-input" ref="groupTitle" contenteditable @blur="updateTitle" @keyup.enter="$event.target.blur()">
             {{ group.title }}
           </div>
         </div>

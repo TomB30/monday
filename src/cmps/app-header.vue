@@ -7,8 +7,8 @@
               <router-link to="/about" class="navbar-icon-link"><img src="@/assets/icons/ring-icon.png" alt=""><div></div></router-link>
           </div>
           <div class="lower-links">
-              <router-link to="/" class="navbar-icon-link"><img src="@/assets/icons/inbox-icon.png" alt=""><div></div></router-link>
-              <router-link to="/" class="navbar-icon-link"><img src="@/assets/icons/calender-icon.png" alt=""><div></div></router-link>
+              <router-link to="/login" class="navbar-icon-link"><img src="@/assets/icons/inbox-icon.png" alt=""><div></div></router-link>
+              <router-link to="#" class="navbar-icon-link"><img src="@/assets/icons/calender-icon.png" alt=""><div></div></router-link>
           </div>
       </nav>
   </header>

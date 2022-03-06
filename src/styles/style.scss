@@ -4,6 +4,7 @@
 @import './basics/base';
 
 @import './views/workspace-page';
+@import './views/login-page';
 
 
 @import './cmps/workspace-navbar';
@@ -17,5 +18,6 @@
 @import './cmps/columns/date-picker';
 @import './cmps/columns/status-picker';
 @import './cmps/columns/timeline-picker';
+@import './cmps/modals/group-modal';
 @import './cmps/modals/member-modal';
 @import './cmps/modals/status-modal';

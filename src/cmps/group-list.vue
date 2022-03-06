@@ -12,6 +12,7 @@
         :group="group"
         :cmpsOrder="board.cmpsOrder"
         :key="group.id"
+        :ref="'group'+group.id"
         @updateGroup="updateGroup"
         @openModal="openModal($event, group)"
         @saveCmpsOrder="saveCmpsOrder"
@@ -24,9 +25,11 @@
       v-if="selectedGroup && groupModalPos"
       :pos="groupModalPos"
       :group="selectedGroup"
+      :colors="board.colors"
       @addGroup="addGroup"
       @openModal="openModal"
       @removeGroup="removeGroup"
+      @renameGroup="focusGroupTitle"
     ></group-modal>
   </section>
 </template>
@@ -51,6 +54,9 @@ export default {
     };
   },
   methods: {
+    focusGroupTitle(id){
+        this.$refs['group'+id][0].$refs.groupTitle.focus()
+    },
     removeGroup() {
       this.groupsToEdit = this.groupsToEdit.filter(
         (group) => group.id !== this.selectedGroup.id
