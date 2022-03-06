@@ -6,13 +6,17 @@
         display: flex;
         line-height: 34px;
         text-align: center;
+        transition: background-color .2s;
+        background-color: #f5f6f8;
         
+        &:hover {
+            background-color: #e6e9ef;
+        }
+
         .task-title{
             min-width: 400px;
             text-align: left;
             display: flex;
-            background-color: #f5f6f8;
-            // position: fixed;
             .left-border {
                 width: 8px;
                 margin-right: 10px;
@@ -46,7 +50,6 @@
             //     margin-inline-start: 400px;
             // }
             border-left:1px solid white;
-            background-color: #f5f6f8;
 
             &.task-end{
                 flex: 1;

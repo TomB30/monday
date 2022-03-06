@@ -1,5 +1,30 @@
 .status-picker {
     @include fc();
+    cursor: pointer;
     height: 100%;
     background-color: #c4c4c4;
+    color: white;
+    position: relative;
+    
+    &:hover:after {
+        border-top: 10px solid transparent;
+        border-left: 10px solid hsla(0, 0%, 78%, 0.6784313725490196);
+        content: "";
+        background-color: #fff;
+        position: absolute;
+        top: 0;
+        right: 0;
+        border-bottom: 0 solid transparent;
+    }
+    &:after {
+        border-top: 0px solid transparent;
+        border-left: 0px solid transparent;
+        transition: border .4s ease-out;
+        content: "";
+        background-color: #fff;
+        position: absolute;
+        top: 0;
+        right: 0;
+        border-bottom: 0 solid transparent;
+    }
 }

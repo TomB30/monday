@@ -27,20 +27,14 @@
         display: flex;
         flex-direction: column;
         .member-preview {
-            cursor: pointer;
+            @include divToBtn();
             display: flex;
             align-items: center;
             margin-top: 4px;
             padding: 6px;
-            border-radius: 4px;
-            transition: background-color .3s;
             span {
                 line-height: 26px;
                 padding: 0 8px;
-            }
-
-            &:hover {
-                background-color: #e6e9ef;
             }
         }
     }

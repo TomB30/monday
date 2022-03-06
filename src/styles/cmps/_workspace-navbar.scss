@@ -36,40 +36,30 @@
         padding: 16px 0;
         border-bottom: 1px solid #d0d4e4;
         > div {
-            cursor: pointer;
+            @include divToBtn();
             display: flex;
             padding-left: 6px;
             line-height: 32px;
-            border-radius: 4px;
-            transition: background-color 0.3s;
 
             i {
                 width: 19px;
             }
-            &:hover {
-                background-color: #e6e9ef;
-            }
+            
         }
     }
     .board-btns {
         padding: 16px 0;
         .board-btn {
-            transition: background-color 0.3s;
-            cursor: pointer;
+            @include divToBtn();
             padding-left: 6px;
             display: flex;
             align-items: center;
             line-height: 31px;
-            border-radius: 4px;
             img {
                 margin-right: 4px;
             }
             &.selected {
                 background-color: #cce5ff;
-            }
-
-            &:hover {
-                background-color: #e6e9ef;
             }
         }
     }

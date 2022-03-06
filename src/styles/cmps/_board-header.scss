@@ -10,17 +10,11 @@
         align-items: center;
 
         i {
-            cursor: pointer;
+            @include divToBtn();
             font-size: 16px;
             color: #676879;
             padding: 8px;
             width: 32px;
-            border-radius: 4px;
-            // margin: 0 4px;
-
-            &:hover {
-                background-color: #e6e9ef;
-            }
         }
 
         .board-title {
@@ -68,13 +62,7 @@
         }
 
         > * {
-            transition: background-color .2s;
-            border-radius: 4px;
-        }
-
-        > *:hover {
-            background-color: #e6e9ef;
-            cursor: pointer;
+            @include divToBtn();
         }
     }
 }

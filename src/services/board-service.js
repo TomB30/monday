@@ -187,6 +187,7 @@ function getEmptyBoard() {
         members: [],
         groups: [],
         activities: [],
+        status:[]
     }
 }
 
@@ -203,7 +204,8 @@ function getEmptyTask() {
     return {
         id: utilService.makeId(),
         title: 'New Task',
-        members: []
+        members: [],
+        status: null,
     }
 }
 

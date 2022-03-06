@@ -47,13 +47,11 @@ button {
         padding: 8px;
     }
     .modal-item {
-        cursor: pointer;
+        @include divToBtn();
         display: flex;
         align-items: center;
         padding: 4px 8px;
         line-height: 24px;
-        border-radius: 4px;
-        transition: background-color 0.2s;
         img {
             width: 15px;
         }
@@ -62,10 +60,6 @@ button {
             &:not(img) {
                 width: 15px;
             }
-        }
-
-        &:hover {
-            background-color: #e6e9ef;
         }
     }
 }

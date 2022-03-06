@@ -1,17 +1,21 @@
 <template>
-  <section class="status-picker">
-      
+  <section class="status-picker" :style="{'background-color':statusColor}">
+    {{statusTxt}}
   </section>
 </template>
 
 <script>
 export default {
   props:{
-    status:Object
+    task:Object
+  },
+  computed:{
+    statusTxt(){
+      return this.task.status?.txt ? this.task.status.txt : ''
+    },
+    statusColor(){
+      return this.task.status?.color ? this.task.status.color : ''
+    }
   }
 }
 </script>
-
-<style>
-
-</style>

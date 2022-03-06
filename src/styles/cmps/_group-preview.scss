@@ -2,10 +2,10 @@
     position: relative;
 
     .drag-handle {
-        cursor:move;
+        cursor: move;
         opacity: 0.6;
         width: 0;
-        transition: width .2s;
+        transition: width 0.2s;
         position: absolute;
         left: 2px;
         top: 50%;
@@ -24,14 +24,15 @@
     .group-table {
         margin-left: 22px;
 
-        .titles,.drag-container {
+        .titles,
+        .drag-container {
             height: 40px;
             display: flex;
             align-items: center;
             text-align: center;
 
-            .resize-border{
-                cursor:e-resize;
+            .resize-border {
+                cursor: e-resize;
                 position: absolute;
                 top: 0;
                 right: 0;
@@ -39,9 +40,12 @@
                 width: 0;
                 border-radius: 4px;
                 background-color: #d0d4e4;
+                &:hover {
+                    background-color: #0073ea;
+                }
             }
 
-            >div:not(.drag-container) {
+            > div:not(.drag-container) {
                 // &:nth-child(2){
                 //     margin-inline-start: 400px;
                 // }
@@ -97,11 +101,11 @@
             .add-task {
                 display: flex;
                 height: 34px;
-                .left-border{
+                .left-border {
                     margin-left: -2px;
                     width: 8px;
                 }
-                input{
+                input {
                     flex: 1;
                     padding: 2px 0px 3px 20px;
                     border: 1px solid #e6e9ef;
@@ -109,12 +113,12 @@
                         border-color: black;
                     }
 
-                    &:focus{
-                       outline: none; 
-                       border-color: #0085ff;
-                       + .add-task-btn {
-                           display: block;
-                       }
+                    &:focus {
+                        outline: none;
+                        border-color: #0085ff;
+                        + .add-task-btn {
+                            display: block;
+                        }
                     }
                 }
                 .add-task-btn {
@@ -129,9 +133,9 @@
                         display: block;
                     }
                 }
-                .right-border{
+                .right-border {
                     width: 8px;
-                    background-color:#d0d4e4;
+                    background-color: #d0d4e4;
                 }
             }
         }

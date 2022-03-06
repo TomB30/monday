@@ -36,7 +36,7 @@
               src="@/assets/icons/drag-handle.png"
               alt=""
             />
-            {{ cmp.type.split("-")[0] }}
+            {{ cmp.type.split("-")[0].charAt(0).toUpperCase()+cmp.type.split("-")[0].substr(1) }}
             <div
               class="resize-border"
               @mousedown="setResizing($event, idx)"
@@ -86,6 +86,7 @@
       :pos="modal.pos"
       :task="modal.task"
       @updateTask="updateTask($event,true)"
+      @closeModal="setModal"
     ></component>
   </section>
 </template>
@@ -156,7 +157,7 @@ export default {
       const dx = this.resizePos - x;
       this.resizePos = x;
       this.cmpsOrderToEdit[this.resizeIdx].width -= dx;
-      this.saveCmpsOrder();
+      // this.saveCmpsOrder();
     },
     saveCmpsOrder() {
       this.$emit(
@@ -166,6 +167,7 @@ export default {
     },
     setModal(modal, task) {
       if (
+        !modal ||
         this.modal &&
         this.modal.task.id === task.id &&
         this.modal.type === modal.type
