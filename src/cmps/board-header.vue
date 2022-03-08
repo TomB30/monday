@@ -10,26 +10,34 @@
         <div>
           <span>Last seen</span><avatar :size="24" username="Tom Bechar" />
         </div>
-        <div><i class="icon-add-member"></i> Invite / 1</div>
+        <div @click="toggleModal(true)"><i class="icon-add-member"></i> Invite / <span v-if="users">{{' '+users.length}}</span></div>
         <div><i class="icon-activity"></i> Activity</div>
         <button><i class="icon-plus"></i> Add to board</button>
         <div><i class="icon-ellipsis"></i></div>
       </div>
     </header>
     <p v-if="isDescOpen" class="board-desc" contenteditable  @focus="focusDesc">Add board description</p>
+    <board-members v-if="isModalOpen" @toggleModal="toggleModal" :appUsers="users" :boardMembers="boardMembers"></board-members>
   </section>
 </template>
 
 <script>
 import Avatar from "vue-avatar";
+import boardMembers from "./modals/board-members.vue";
 
 export default {
+  props:{
+    boardMembers:Array
+  },
   data() {
     return {
-        isDescOpen: true
+        isDescOpen: true,
+        users:null,
+        isModalOpen:false,
     };
   },
   components: {
+    boardMembers,
     Avatar,
   },
   computed:{
@@ -53,7 +61,20 @@ export default {
       },
       changeTitle(ev){
         this.$emit('setVal','title',ev.target.innerText)
+      },
+      toggleModal(isOpen){
+        this.isModalOpen = isOpen
       }
+  },
+  watch:{
+    '$store.getters.users' : {
+      handler(newVal){
+        this.users = newVal
+        console.log(this.users);
+      },
+      deep:true,
+      immediate:true
+    }
   }
 };
 </script>

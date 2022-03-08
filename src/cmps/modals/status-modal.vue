@@ -20,7 +20,6 @@ export default {
   },
   computed:{
     boardStatus(){
-      console.log(this.$store.getters.selectedBoard?.status);
       return this.$store.getters.selectedBoard?.status
     }
   },
@@ -32,8 +31,5 @@ export default {
       this.$emit('closeModal')
     }
   },
-  created(){
-    console.log(this.pos);
-  }
 }
 </script>

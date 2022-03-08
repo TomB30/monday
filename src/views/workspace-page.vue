@@ -1,10 +1,10 @@
 <template>
-  <section class="workspace-page">
+  <section class="workspace-page" v-if="selectedBoard">
     <workspace-navbar></workspace-navbar>
     <section class="board-container">
-      <board-header @setVal="updateBoard"></board-header>
+      <board-header  @setVal="updateBoard" :boardMembers="selectedBoard.members"></board-header>
       <board-toolbar @addTask="addTask"></board-toolbar>
-      <group-list v-if="selectedBoard" :board="selectedBoard" @updateBoard="updateBoard"></group-list>
+      <group-list  :board="selectedBoard" @updateBoard="updateBoard"></group-list>
     </section>
   </section>
 </template>
@@ -42,6 +42,7 @@ export default {
   async created() {
     try {
       await this.$store.dispatch('loadBoards')
+      await this.$store.dispatch('loadUsers')
       this.boardIds = this.$store.getters.boards;
       this.selectedBoard =  this.$store.getters.selectedBoard;
     } catch (err) {
@@ -54,5 +55,13 @@ export default {
     boardToolbar,
     groupList,
   },
+  watch:{
+    '$store.getters.selectedBoard' : {
+      handler(newVal){
+        this.selectedBoard = newVal
+      },
+      deep:true
+    }
+  }
 };
 </script>

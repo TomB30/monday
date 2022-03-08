@@ -1,6 +1,9 @@
 export const storageService = {
     saveToStorage,
-    loadFromStorage
+    loadFromStorage,
+    saveSession,
+    loadSession,
+    clearSession
 }
 
 
@@ -12,3 +15,15 @@ function loadFromStorage(key) {
     var str = localStorage.getItem(key)
     return JSON.parse(str)
 }
+
+function saveSession(key, value){
+    sessionStorage.setItem(key , JSON.stringify(value))
+ }
+ 
+ function loadSession(key){
+    return JSON.parse(sessionStorage.getItem(key))
+ }
+ 
+ function clearSession(key){
+     sessionStorage.removeItem(key)
+ }
