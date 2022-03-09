@@ -32,6 +32,7 @@ async function login(creds){
     try {
         const user = await httpService.post(AUTH_PATH+'login',creds)
         storageService.saveSession(KEY,user)
+        return user;
     }catch (err){
         console.log(`Email or password are invalid`,err);
     }
@@ -41,6 +42,7 @@ async function signup(creds){
     try {
         const user = await httpService.post(AUTH_PATH+'signup',creds)
         storageService.saveSession(KEY,user)
+        return user
     } catch(err){
         console.log(`couldn't signup`,err);
     }

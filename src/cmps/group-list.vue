@@ -8,7 +8,7 @@
       animation="400"
     >
       <group-preview
-        v-for="group in board.groups"
+        v-for="group in groups"
         :group="group"
         :cmpsOrder="board.cmpsOrder"
         :key="group.id"
@@ -44,6 +44,7 @@ import draggable from "vuedraggable";
 export default {
   props: {
     board: Object,
+    groups: Array
   },
   data() {
     return {

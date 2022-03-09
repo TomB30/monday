@@ -28,8 +28,13 @@
         flex-direction: column;
         .member-preview {
             @include divToBtn();
+            >div {
+                display: flex;
+                align-items: center;
+            }
             display: flex;
             align-items: center;
+            justify-content: space-between;
             margin-top: 4px;
             padding: 6px;
             span {
@@ -37,9 +42,13 @@
                 padding: 0 8px;
                 font-weight: 500;
             }
+            i {
+                padding: 6px;
+                color: #aeafb8;
+            }
         }
     }
-    i { 
+    >i { 
         @include divToBtn();
         position: absolute;
         padding: 6px;

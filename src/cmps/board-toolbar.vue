@@ -4,14 +4,38 @@
       <span>New Item</span>
       <i class="icon-down-arrow" />
     </button>
-    <div v-for="icon in icons" :key="icon.txt" @click="openModal(icon.type)">
+    <div class="input-container">
+      <i class="icon-search" />
+      <input type="text" placeholder="Search" v-model="filterBy.txt" @input="setFilter"/>
+    </div>
+    <div>
       <div class="icon-container">
-        <i :class="icon.class" />
+        <i class="icon-member" />
       </div>
-      <span v-if="icon.txt" :class="{filter:icon.addOn}">{{ icon.txt }}</span>
-      <div class="icon-container" v-if="icon.addOn">
-        <i :class="icon.addOn" />
+      <span>Person</span>
+    </div>
+    <div>
+      <div class="icon-container">
+        <i class="icon-filter" />
       </div>
+      <span class="filter">Filter</span>
+      <div class="icon-container">
+        <i class="icon-down-arrow" />
+      </div>
+    </div>
+    <div>
+      <div class="icon-container">
+        <i class="icon-sort" />
+      </div>
+      <span>Sort</span>
+    </div>
+    <div>
+      <div class="icon-container">
+        <i class="icon-pin" />
+      </div>
+    </div>
+    <div class="icon-container">
+      <i class="icon-eye-lined" />
     </div>
   </section>
 </template>
@@ -20,23 +44,22 @@
 export default {
   data() {
     return {
-      icons: [
-        { class: "icon-search", txt: "Search", type:'search'},
-        { class: "icon-member", txt: "Person", type:'members'},
-        { class: "icon-filter", txt: "Filter", addOn: "icon-down-arrow", type:'filter'},
-        { class: "icon-sort", txt: "Sort", type:'sort'},
-        { class: "icon-pin", type:'pin'},
-        { class: "icon-eye-lined", type:'hidden'},
-      ],
+      filterBy: {
+        txt: "",
+        members: [],
+      },
     };
   },
-  methods:{
-    openModal(modalType){
+  methods: {
+    openModal(modalType) {
       console.log(modalType);
     },
-    addTask(){
-      this.$emit('addTask')
+    addTask() {
+      this.$emit('addTask');
+    },
+    setFilter(){
+      this.$emit('setFilter',{...this.filterBy})
     }
-  }
+  },
 };
 </script>

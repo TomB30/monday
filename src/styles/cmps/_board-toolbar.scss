@@ -22,6 +22,33 @@
                 padding-top: 4px;
             }
         }
+        &.input-container {
+            position: relative;
+            i{
+                position: absolute;
+                left: 8px;
+            }
+            input{
+                padding-inline-start: 28px;
+                background: none;
+                border: none;
+                width: 80px;
+                // margin-inline-end: 6px;
+                height: 100%;
+                transition: width .3s;
+                border-radius: 4px;
+                &::placeholder{
+                    color: #323338;
+                    font-size: 14px;
+                }
+                &:focus{
+                    width: 200px;
+                    outline: none;
+                    border:1px solid #0073ea;
+                    background-color:white;
+                }
+            }
+        }
 
         span:not(.filter) {
             padding-inline-end: 12px;

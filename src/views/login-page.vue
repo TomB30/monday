@@ -1,7 +1,7 @@
 <template>
   <section class="login-page">
     <main>
-      <form @submit.prevent="sendCreds">
+      <form @submit.prevent="sendCreds" v-if="!loggedUser">
         <h2>{{ mainHeader }}</h2>
         <input
           v-if="!isLogin"
@@ -31,6 +31,10 @@
         />
         <button>{{ mainBtn }}</button>
       </form>
+      <template v-else>
+      <h2 >Welcome {{loggedUser.fullname}}</h2>
+      <button @click="logout">Logout</button>
+      </template>
     </main>
     <aside>
       <h2>{{ sideHeader }}</h2>
@@ -52,6 +56,7 @@ export default {
         password: "",
         passwordConfirm: "",
       },
+      loggedUser:null
     };
   },
   methods: {
@@ -96,6 +101,13 @@ export default {
         console.log(err, "Failed to signup");
       }
     },
+    async logout(){
+      try {
+         await this.$store.dispatch({type:'logout'})
+      } catch(err){
+        console.log('failed to logout');
+      }
+    },
     checkPass() {
       console.log(this.creds.password === this.creds.passwordConfirm)
       return this.creds.password === this.creds.passwordConfirm
@@ -128,5 +140,13 @@ export default {
         : "";
     },
   },
+  watch:{
+    '$store.getters.loggedInUser' : {
+      handler(newVal){
+        this.loggedUser = newVal
+      },
+      immediate:true
+    }
+  }
 };
 </script>

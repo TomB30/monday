@@ -17,7 +17,7 @@
       </div>
     </header>
     <p v-if="isDescOpen" class="board-desc" contenteditable  @focus="focusDesc">Add board description</p>
-    <board-members v-if="isModalOpen" @toggleModal="toggleModal" :appUsers="users" :boardMembers="boardMembers"></board-members>
+    <board-members v-if="isModalOpen" @toggleMember="toggleMember" @toggleModal="toggleModal" :appUsers="users" :boardMembers="boardMembers"></board-members>
   </section>
 </template>
 
@@ -64,6 +64,13 @@ export default {
       },
       toggleModal(isOpen){
         this.isModalOpen = isOpen
+      },
+      toggleMember(member){
+        const members = JSON.parse(JSON.stringify(this.boardMembers))
+        const idx = members.findIndex(m => m._id === member._id)
+        if(idx === -1) members.push(member)
+        else members.splice(idx ,1)
+        this.$emit('setVal','members',members)
       }
   },
   watch:{
