@@ -5,7 +5,7 @@
     </div>
       <template v-if="isOpen">
         <div class="workspace-name">
-          <h3>Your workspace</h3>
+          <h3>{{username}}'s workspace</h3>
         </div>
         <section class="navbar-btns">
           <div @click="createBoard">
@@ -64,6 +64,9 @@ export default {
     selectedBoard() {
       return this.$store.getters.selectedBoard?._id;
     },
+    username(){
+      return this.$store.getters.loggedInUser.fullname.split(' ')[0]
+    }
   },
   watch: {
     "$store.getters.selectedBoard": {

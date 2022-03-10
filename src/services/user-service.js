@@ -2,7 +2,7 @@ import {httpService} from './http-service.js'
 import { storageService } from './storage-service.js';
 
 
-const AUTH_PATH = 'auth/'
+const AUTH_URL = 'auth/'
 const KEY = 'loggedUser'
 
 export const userService = {
@@ -30,7 +30,7 @@ async function getUsers(){
 
 async function login(creds){
     try {
-        const user = await httpService.post(AUTH_PATH+'login',creds)
+        const user = await httpService.post(AUTH_URL+'login',creds)
         storageService.saveSession(KEY,user)
         return user;
     }catch (err){
@@ -40,7 +40,7 @@ async function login(creds){
 
 async function signup(creds){
     try {
-        const user = await httpService.post(AUTH_PATH+'signup',creds)
+        const user = await httpService.post(AUTH_URL+'signup',creds)
         storageService.saveSession(KEY,user)
         return user
     } catch(err){
@@ -50,7 +50,7 @@ async function signup(creds){
 
 async function logout(){
     try {
-        await httpService.post(AUTH_PATH+'logout')
+        await httpService.post(AUTH_URL+'logout')
         storageService.clearSession(KEY)
     } catch(err){
         console.log('Failed to logout');

@@ -15,13 +15,14 @@ export const boardService = {
     getBoardById
 }
 
-function loadBoards() {
-    return httpService.get(endpoint).then(boards => {
+function loadBoards(userId) {
+    return httpService.get(endpoint,{userId}).then(boards => {
         if (!boards || !boards.length) {
             console.log('no boards found');
-            const board = _createBoard()
+            const board = getEmptyBoard(true)
             return httpService.post(endpoint, { board }).then(board => [board])
         } else {
+            console.log(boards);
             return boards
         }
     })
@@ -169,9 +170,9 @@ function _createBoard() {
 
 
 
-function getEmptyBoard() {
+function getEmptyBoard(isDemo) {
     return {
-        title: 'Board Title',
+        title: isDemo ? 'Demo Board' : 'Board Title',
         description: 'Add board description',
         members: [userService.getLoggedInUser()],
         groups: [

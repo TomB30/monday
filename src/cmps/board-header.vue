@@ -77,7 +77,6 @@ export default {
     '$store.getters.users' : {
       handler(newVal){
         this.users = newVal
-        console.log(this.users);
       },
       deep:true,
       immediate:true

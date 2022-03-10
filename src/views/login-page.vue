@@ -68,7 +68,6 @@ export default {
         this.login()
       } else {
         if (!this.checkPass()) return
-        console.log('passed check')
         this.signup()
       }
     },
@@ -80,8 +79,8 @@ export default {
           type: "login",
           userCreds: { email, password },
         });
-        console.log("login", user);
         this.resetCreds();
+        this.isLoading = false
       } catch (err) {
         console.log(err);
       } finally {
@@ -89,13 +88,11 @@ export default {
       }
     },
     async signup() {
-      console.log('signup');
       try {
         const user = await this.$store.dispatch({
           type: "signup",
           userCreds: { ...this.creds },
         });
-        console.log("signup", user);
         this.resetCreds();
       } catch (err) {
         console.log(err, "Failed to signup");
@@ -105,7 +102,7 @@ export default {
       try {
          await this.$store.dispatch({type:'logout'})
       } catch(err){
-        console.log('failed to logout');
+        console.log(err,'failed to logout');
       }
     },
     checkPass() {

@@ -16,11 +16,13 @@ export const boardStore = {
     },
     mutations: {
         setBoards(state, { boards }) {
+            console.log('hi');
             state.boards = boards
         },
         setBoard(state, { board }) {
-            state.boards = state.boards.map(b => b._id !== board._id ? b : board)
             state.selectedBoard = board
+            if(!board) return;
+            state.boards = state.boards.map(b => b._id !== board._id ? b : board)
         },
         setBoardById(state,  boardId ) {
             const board = state.boards.find(b => b._id === boardId)
@@ -32,13 +34,14 @@ export const boardStore = {
         }
     },
     actions: {
-        async loadBoards({ commit, state }) {
+        async loadBoards({ commit, state ,rootGetters}) {
             try {
-                const boards = await boardService.loadBoards()
+                const userId = rootGetters.loggedInUser._id
+                const boards = await boardService.loadBoards(userId)
+                commit({ type: 'setBoards', boards })
                 if (!state.selectedBoard) {
                     commit({ type: 'setBoard', board:boards[0] })
                 }
-                commit({ type: 'setBoards', boards })
             } catch (err) {
                 console.log('Couldn\'t load boards', err);
             }
