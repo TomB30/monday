@@ -1,10 +1,10 @@
 <template>
   <section class="workspace-page" v-if="selectedBoard">
-    <workspace-navbar @createBoard="createBoard"></workspace-navbar>
+    <workspace-navbar @createBoard="createBoard" @setBoard="setBoard" />
     <section class="board-container">
-      <board-header  @setVal="updateBoard" :boardMembers="selectedBoard.members"></board-header>
-      <board-toolbar @addTask="addTask" @setFilter="setFilter"></board-toolbar>
-      <group-list  :board="selectedBoard" :groups="filteredGroups" @updateBoard="updateBoard"></group-list>
+      <board-header  @setVal="updateBoard" :boardMembers="selectedBoard.members" />
+      <board-toolbar @addTask="addTask" @setFilter="setFilter" />
+      <group-list  :board="selectedBoard" :groups="filteredGroups" @updateBoard="updateBoard" />
     </section>
   </section>
 </template>
@@ -41,6 +41,10 @@ export default {
     },
     createBoard(){
       this.$store.dispatch('createBoard')
+    },
+    setBoard(boardId){
+      console.log('boardId',boardId);
+      this.$store.commit('setBoardById',boardId)
     }
   },
   computed:{

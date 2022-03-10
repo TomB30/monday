@@ -22,6 +22,10 @@ export const boardStore = {
             state.boards = state.boards.map(b => b._id !== board._id ? b : board)
             state.selectedBoard = board
         },
+        setBoardById(state,  boardId ) {
+            const board = state.boards.find(b => b._id === boardId)
+            state.selectedBoard = board
+        },
         addBoard(state, {savedBoard}){
             state.boards.push(savedBoard)
             state.selectedBoard = savedBoard

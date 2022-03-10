@@ -49,6 +49,9 @@ export default {
     },
     createBoard(){
       this.$emit('createBoard')
+    },
+    setBoard(boardId){
+      this.$emit('setBoard',boardId)
     }
   },
   computed: {
