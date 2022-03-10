@@ -1,4 +1,5 @@
 import { utilService } from "./util-service.js"
+import { userService } from "./user-service.js"
 import { storageService } from "./async-storage-service.js"
 import { httpService } from "./http-service.js"
 import { end } from "cheerio/lib/api/traversing"
@@ -15,12 +16,12 @@ export const boardService = {
 }
 
 function loadBoards() {
-    return httpService.get(endpoint).then(boards=> {
-        if(!boards || !boards.length){
+    return httpService.get(endpoint).then(boards => {
+        if (!boards || !boards.length) {
             console.log('no boards found');
             const board = _createBoard()
-            return httpService.post(endpoint,{board}).then(board => [board])
-        }else {
+            return httpService.post(endpoint, { board }).then(board => [board])
+        } else {
             return boards
         }
     })
@@ -31,8 +32,8 @@ function getBoardById(boardId) {
 }
 
 function save(board) {
-    if (board._id) return httpService.put(endpoint, {board})
-    else return httpService.post(endpoint, {board})
+    if (board._id) return httpService.put(endpoint, { board })
+    else return httpService.post(endpoint, { board })
 }
 
 
@@ -46,13 +47,6 @@ function _createBoard() {
             "fullname": "Abi Abambi",
             "imgUrl": "http://some-img"
         },
-        "labels": [
-            {
-                "id": "l101",
-                "title": "Done",
-                "color": "#61bd4f"
-            }
-        ],
         "members": [
             {
                 "_id": "u101",
@@ -148,7 +142,6 @@ function _createBoard() {
                         }
                     }
                 ],
-                "style": {},
                 "color": 'turquoise'
             }
         ],
@@ -178,16 +171,75 @@ function _createBoard() {
 
 function getEmptyBoard() {
     return {
-        title: '',
-        description: '',
-        createdAt: null,
-        updatedAt: null,
-        createdBy: null,
-        labels: [],
-        members: [],
-        groups: [],
+        title: 'Board Title',
+        description: 'Add board description',
+        members: [userService.getLoggedInUser()],
+        groups: [
+            {
+                id: 'g101',
+                title: 'Group Title',
+                tasks: [
+                    {
+                        id: "t101",
+                        title: 'Do this',
+                        comments: [],
+                        members: [],
+                        createdBy: userService.getLoggedInUser(),
+                        createdAt: Date.now()
+                    },
+                    {
+                        id: "t102",
+                        title: 'Do that',
+                        comments: [],
+                        members: [],
+                        createdBy: userService.getLoggedInUser(),
+                        createdAt: Date.now()
+                    },
+                ],
+                color: '#579bfc',
+                createdBy: userService.getLoggedInUser(),
+                createdAt: Date.now()
+            },
+            {
+                id: 'g102',
+                title: 'Group Title',
+                tasks: [
+                    {
+                        id: "t101",
+                        title: 'Do this',
+                        comments: [],
+                        members: [],
+                        createdBy: userService.getLoggedInUser(),
+                        createdAt: Date.now()
+                    },
+                ],
+                color: '#00c875',
+                createdBy: userService.getLoggedInUser(),
+                createdAt: Date.now()
+            },
+        ],
         activities: [],
-        status:[]
+        status: [
+            {
+                id: "s101",
+                txt: "Done",
+                color: "#33d391",
+            },
+            {
+                id: "s102",
+                txt: "In Progress",
+                color: "#fdbc64",
+            },
+            {
+                id:"s103",
+                txt:"Bug",
+                color:"#e8697d"
+            }
+        ],
+        colors: ['#037f4c', '#00c875', '#9cd326', '#cab641', '#ffcb00', '#784bd1', '#a25ddc', '#0086c0', '#579bfc', '#bb3354', '#e2445c', '#ff158a', '#ff5ac4', '#ff642e', '#fdab3d', '#7f5347', '#c4c4c4', '#808080'],
+        cmpsOrder: [{ type: "status-picker", width: 130, minWidth: 90 }, { type: "member-picker", width: 140, minWidth: 100 }, { type: 'timeline-picker', width: 180, minWidth: 180 }, { type: "date-picker", width: 130, minWidth: 100 }],
+        createdBy: userService.getLoggedInUser(),
+        createdAt: Date.now()
     }
 }
 

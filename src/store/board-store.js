@@ -21,6 +21,10 @@ export const boardStore = {
         setBoard(state, { board }) {
             state.boards = state.boards.map(b => b._id !== board._id ? b : board)
             state.selectedBoard = board
+        },
+        addBoard(state, {savedBoard}){
+            state.boards.push(savedBoard)
+            state.selectedBoard = savedBoard
         }
     },
     actions: {
@@ -51,6 +55,16 @@ export const boardStore = {
             } catch (err) {
                 console.log(`couldn't save board ${board._id} , ${err}`);
                 commit({ type: 'setBoard', prevBoard })
+            }
+        },
+        async createBoard({commit}){
+            const board = boardService.getEmptyBoard()
+            try {
+               const savedBoard = await boardService.save(board)
+               commit({type:'addBoard',savedBoard})
+               return savedBoard
+            } catch(err){
+                console.log(err, 'Failed to create board');
             }
         }
     }

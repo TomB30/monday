@@ -12,7 +12,7 @@
         :group="group"
         :cmpsOrder="board.cmpsOrder"
         :key="group.id"
-        :ref="'group'+group.id"
+        :ref="'group' + group.id"
         @updateGroup="updateGroup"
         @openModal="openModal($event, group)"
         @saveCmpsOrder="saveCmpsOrder"
@@ -44,7 +44,7 @@ import draggable from "vuedraggable";
 export default {
   props: {
     board: Object,
-    groups: Array
+    groups: Array,
   },
   data() {
     return {
@@ -55,8 +55,8 @@ export default {
     };
   },
   methods: {
-    focusGroupTitle(id){
-        this.$refs['group'+id][0].$refs.groupTitle.focus()
+    focusGroupTitle(id) {
+      this.$refs["group" + id][0].$refs.groupTitle.focus();
     },
     removeGroup() {
       this.groupsToEdit = this.groupsToEdit.filter(
@@ -70,7 +70,7 @@ export default {
       if (group?.color) {
         groupToAdd = JSON.parse(JSON.stringify(group));
         groupToAdd.id = utilService.makeId();
-        groupToAdd.title += ' (Copy)'
+        groupToAdd.title += " (Copy)";
       } else {
         groupToAdd = JSON.parse(JSON.stringify({ ...this.newGroup }));
       }

@@ -1,6 +1,6 @@
 <template>
   <section class="workspace-page" v-if="selectedBoard">
-    <workspace-navbar></workspace-navbar>
+    <workspace-navbar @createBoard="createBoard"></workspace-navbar>
     <section class="board-container">
       <board-header  @setVal="updateBoard" :boardMembers="selectedBoard.members"></board-header>
       <board-toolbar @addTask="addTask" @setFilter="setFilter"></board-toolbar>
@@ -38,6 +38,9 @@ export default {
     },
     setFilter(filterBy){
       this.filterBy = filterBy
+    },
+    createBoard(){
+      this.$store.dispatch('createBoard')
     }
   },
   computed:{

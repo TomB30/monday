@@ -8,7 +8,7 @@
           <h3>Your workspace</h3>
         </div>
         <section class="navbar-btns">
-          <div>
+          <div @click="createBoard">
             <i class="icon-plus"></i>
             <span>Add</span>
           </div>
@@ -47,6 +47,9 @@ export default {
     toggleOpen() {
       this.isOpen = !this.isOpen;
     },
+    createBoard(){
+      this.$emit('createBoard')
+    }
   },
   computed: {
     iconClass() {
