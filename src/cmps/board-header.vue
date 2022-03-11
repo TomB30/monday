@@ -10,10 +10,8 @@
         <div>
           <span>Last seen</span><avatar :size="24" username="Tom Bechar" />
         </div>
-        <div @click="toggleModal(true)"><i class="icon-add-member"></i> Invite / <span v-if="users">{{' '+users.length}}</span></div>
-        <div><i class="icon-activity"></i> Activity</div>
-        <button><i class="icon-plus"></i> Add to board</button>
-        <div><i class="icon-ellipsis"></i></div>
+        <div @click="toggleModal(true)"><i class="icon-add-member"></i><span>Invite / <span v-if="users">{{' '+users.length}}</span></span></div>
+        <div><i class="icon-activity"></i><span>Activity</span></div>
       </div>
     </header>
     <p v-if="isDescOpen" class="board-desc" contenteditable  @focus="focusDesc">Add board description</p>

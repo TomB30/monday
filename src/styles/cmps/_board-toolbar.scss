@@ -2,7 +2,10 @@
     display: flex;
     margin: 0 30px;
     padding: 16px 0;
-    border-top: 1px solid #d0d4e4;
+    // border-top: 1px solid #d0d4e4;
+    @media (max-width: 700px) {
+        margin: 0 15px;
+    }
     > * {
         @include fc();
         @include divToBtn();
@@ -24,34 +27,40 @@
         }
         &.input-container {
             position: relative;
-            i{
+            i {
                 position: absolute;
                 left: 8px;
             }
-            input{
+            input {
                 padding-inline-start: 28px;
                 background: none;
                 border: none;
                 width: 80px;
+                height: 32px;
                 // margin-inline-end: 6px;
-                height: 100%;
-                transition: width .3s;
+                transition: width 0.3s;
                 border-radius: 4px;
-                &::placeholder{
+                &::placeholder {
                     color: #323338;
                     font-size: 14px;
                 }
-                &:focus{
+                &:focus {
                     width: 200px;
                     outline: none;
-                    border:1px solid #0073ea;
-                    background-color:white;
+                    border: 1px solid #0073ea;
+                    background-color: white;
                 }
             }
         }
 
-        span:not(.filter) {
+        span {
             padding-inline-end: 12px;
+        }
+
+        @media (max-width: 600px) {
+            span:not(.btn-span) {
+                display: none;
+            }
         }
     }
 
@@ -65,12 +74,12 @@
 
         &:hover {
             background-color: #0060b9;
-            i{
+            i {
                 border-inline-start: 1px solid #0073ea;
             }
         }
-        
-        span{
+
+        span {
             padding: 0 8px;
         }
         i {

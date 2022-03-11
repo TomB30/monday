@@ -6,17 +6,21 @@
         display: flex;
         line-height: 34px;
         text-align: center;
-        transition: background-color .2s;
+        transition: background-color 0.2s;
         background-color: #f5f6f8;
         
         &:hover {
             background-color: #e6e9ef;
         }
-
-        .task-title{
+        
+        .task-title {
             min-width: 400px;
             text-align: left;
             display: flex;
+            position: sticky;
+            left:22px;
+            z-index: 1;
+            background-color: #f5f6f8;
             .left-border {
                 width: 8px;
                 margin-right: 10px;
@@ -29,20 +33,32 @@
                 &:hover {
                     border: 1px solid #c5c7d0;
                 }
-                &:focus{
+                &:focus {
                     outline: 1px solid #0085ff;
                 }
             }
-        }
-        
-        .task-info {
 
+            @media (max-width: 1200px) {
+                min-width: 300px;
+                width: 300px;
+                text-overflow: ellipsis;
+            }
+            @media (max-width: 1100px) {
+                min-width: 200px;
+                width: 200px;
+                text-overflow: ellipsis;
+            }
+        }
+        .info-container {
+            display: flex;
+        }
+        .task-info {
             // &:nth-child(2){
             //     margin-inline-start: 400px;
             // }
-            border-left:1px solid white;
-
-            &.task-end{
+            border-left: 1px solid white;
+            background-color: #f5f6f8;
+            &.task-end {
                 flex: 1;
                 min-width: 38px;
                 border-right: 8px solid #d0d4e4;

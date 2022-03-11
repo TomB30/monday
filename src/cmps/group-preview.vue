@@ -64,6 +64,7 @@
           :key="task.id"
           @updateTask="updateTask"
           @setModal="setModal($event, task)"
+          @setParams="setParams"
         ></task-preview>
         <div class="add-task">
           <div
@@ -114,6 +115,10 @@ export default {
     };
   },
   methods: {
+    setParams(taskId){
+      if(this.$route.params.taskId === taskId) return this.$router.push('/workspace')
+      this.$router.push(`/workspace/${this.group.id}/${taskId}`)
+    },
     addTask() {
       const taskToAdd = {
         ...boardService.getEmptyTask(),

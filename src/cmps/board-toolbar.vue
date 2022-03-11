@@ -1,8 +1,7 @@
 <template>
   <section class="board-toolbar">
     <button class="new-item-btn" @click="addTask">
-      <span>New Item</span>
-      <i class="icon-down-arrow" />
+      <span class="btn-span">New Item</span>
     </button>
     <div class="input-container">
       <i class="icon-search" />
@@ -19,23 +18,12 @@
         <i class="icon-filter" />
       </div>
       <span class="filter">Filter</span>
-      <div class="icon-container">
-        <i class="icon-down-arrow" />
-      </div>
     </div>
     <div>
       <div class="icon-container">
         <i class="icon-sort" />
       </div>
       <span>Sort</span>
-    </div>
-    <div>
-      <div class="icon-container">
-        <i class="icon-pin" />
-      </div>
-    </div>
-    <div class="icon-container">
-      <i class="icon-eye-lined" />
     </div>
   </section>
 </template>

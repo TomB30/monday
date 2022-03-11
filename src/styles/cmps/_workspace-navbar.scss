@@ -52,6 +52,7 @@
         .board-btn {
             @include divToBtn();
             padding-left: 6px;
+            margin-bottom: 5px;
             display: flex;
             align-items: center;
             line-height: 31px;

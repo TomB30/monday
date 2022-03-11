@@ -46,7 +46,7 @@
                 }
             }
 
-            > div:not(.drag-container) {
+            > div:not(.drag-container,.group-title) {
                 // &:nth-child(2){
                 //     margin-inline-start: 400px;
                 // }
@@ -65,12 +65,27 @@
                 text-align: left;
                 line-height: 32px;
                 padding: 4px 0;
-                // position: fixed;
+                position: sticky;
+                left: 22px;
+                background-color: rgba(255, 255, 255, 0.85);
+                z-index: 1;
                 &:hover {
                     .group-title-input {
                         margin-left: 18px;
                         border: 1px dashed #c5c7d0;
                     }
+                }
+                @media (max-width:1200px) {
+                    min-width:300px;
+                    width: 300px;
+                    text-overflow: ellipsis;
+                    
+                }
+                @media (max-width:1100px) {
+                    min-width:200px;
+                    width: 200px;
+                    text-overflow: ellipsis;
+                    
                 }
             }
             .cmp-title {

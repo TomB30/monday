@@ -4,7 +4,8 @@ import { boardService } from "../services/board-service"
 export const boardStore = {
     state: {
         boards: [],
-        selectedBoard: null
+        selectedBoard: null,
+        currTask: null
     },
     getters: {
         selectedBoard({ selectedBoard }) {
@@ -12,9 +13,16 @@ export const boardStore = {
         },
         boards({ boards }) {
             return boards
+        },
+        currTask({currTask}){
+            return currTask
         }
     },
     mutations: {
+        setTask(state,{groupId,taskId}){
+            const task = state.selectedBoard.groups.find(g => g.id === groupId).tasks.find(t => t.id === taskId)
+            state.currTask = task
+        },
         setBoards(state, { boards }) {
             console.log('hi');
             state.boards = boards
@@ -34,6 +42,9 @@ export const boardStore = {
         }
     },
     actions: {
+        setTask({commit},{groupId,taskId}){
+            commit({type:'setTask',groupId,taskId})
+        },  
         async loadBoards({ commit, state ,rootGetters}) {
             try {
                 const userId = rootGetters.loggedInUser._id
@@ -59,6 +70,7 @@ export const boardStore = {
             commit({ type: 'setBoard', board })
             try {
                 const updatedBoard = await boardService.save(board)
+                return updatedBoard
             } catch (err) {
                 console.log(`couldn't save board ${board._id} , ${err}`);
                 commit({ type: 'setBoard', prevBoard })

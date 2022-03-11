@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import workspacePage from '../views/workspace-page.vue'
 import homePage from '../views/Home.vue'
 import loginPage from '../views/login-page.vue'
+import taskDetails from '../cmps/task-details.vue'
 
 Vue.use(VueRouter)
 
@@ -15,7 +16,13 @@ const routes = [
   {
     path: '/workspace',
     name: 'workspace',
-    component: workspacePage
+    component: workspacePage,
+    children: [
+      {
+        path: ':groupId/:taskId',
+        component: taskDetails,
+      }
+    ]
   },
   {
     path: '/login',

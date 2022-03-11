@@ -3,26 +3,33 @@
     <!-- <div class="task-options" >
       <i class="icon-down-arrow"></i>
     </div> -->
-    <div class="task-title">
+    <div class="task-title" @click.self="setParams">
       <div
         :style="{ 'background-color': groupColor }"
         class="left-border"
       ></div>
-      <span contenteditable @blur="setVal('title',$event.target.innerText)" @keyup.enter.prevent="$event.target.blur()">{{ task.title }}</span>
+      <span
+        contenteditable
+        @blur="setVal('title', $event.target.innerText)"
+        @keyup.enter.prevent="$event.target.blur()"
+        >{{ task.title }}</span
+      >
     </div>
-    <div
-      v-for="cmp in cmpsOrder"
-      :key="cmp.type"
-      :style="{ 'min-width': cmp.minWidth + 'px', width: cmp.width + 'px' }"
-      class="task-info"
-      @click="openModal($event, cmp.type)"
-    >
-      <component
-        :is="cmp.type"
-        :task="task"
-        :color="groupColor"
-        @setVal="setVal"
-      ></component>
+    <div class="info-container">
+      <div
+        v-for="cmp in cmpsOrder"
+        :key="cmp.type"
+        :style="{ 'min-width': cmp.minWidth + 'px', width: cmp.width + 'px' }"
+        class="task-info"
+        @click="openModal($event, cmp.type)"
+      >
+        <component
+          :is="cmp.type"
+          :task="task"
+          :color="groupColor"
+          @setVal="setVal"
+        ></component>
+      </div>
     </div>
     <div class="task-info task-end"></div>
   </div>
@@ -41,10 +48,12 @@ export default {
     groupColor: String,
   },
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
+    setParams() {
+      this.$emit("setParams", this.task.id);
+    },
     updateTask(updatedTask) {
       this.$emit("updateTask", updatedTask);
     },
@@ -55,9 +64,9 @@ export default {
       const modal = {
         type: type.split("-")[0] + "-modal",
         pos,
-        info:{
-          task:this.task
-        }
+        info: {
+          task: this.task,
+        },
       };
       this.$emit("setModal", modal);
     },
