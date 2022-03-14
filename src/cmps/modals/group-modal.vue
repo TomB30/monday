@@ -2,7 +2,8 @@
   <section
     class="group-modal modal"
     :style="{ top: openPos.y + 'px', left: openPos.x + 'px' }"
-    @click="closeModal"
+    
+    v-close="closeModal"
   >
     <section class="modal-section">
       <div class="modal-item">

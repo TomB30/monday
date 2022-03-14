@@ -7,7 +7,7 @@ import './styles/style.scss'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en'
-
+import './directives'
 
 Vue.config.productionTip = false
 

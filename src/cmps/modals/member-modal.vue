@@ -3,6 +3,7 @@
     ref="member-modal"
     class="member-modal modal"
     :style="{ top: pos.y + 'px', left: midPos + 'px' }"
+    v-close="closeModal"
   >
     <div class="task-members">
       <div v-for="member in task.members" :key="member._id" class="task-member">
@@ -75,6 +76,9 @@ export default {
       }
       this.$emit("updateTask", taskToEdit);
     },
+    closeModal(){
+      this.$emit('closeModal')
+    }
   },
   components: {
     avatar,

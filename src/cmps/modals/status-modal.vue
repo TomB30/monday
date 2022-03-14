@@ -1,5 +1,5 @@
 <template>
-  <section class="status-modal modal" :style="{'top':pos.y+'px','left':pos.x+'px'}">
+  <section class="status-modal modal" :style="{'top':pos.y+'px','left':pos.x+'px'}" v-close="closeModal">
     <div class="status-list">
       <div v-for="status in boardStatus" :key="status.id" :style="{'background-color':status.color}" class="status-preview" @click="selectStatus(status)"> 
         {{status.txt}}
@@ -28,6 +28,9 @@ export default {
       const taskToEdit = JSON.parse(JSON.stringify(this.task))
       taskToEdit.status = status
       this.$emit('updateTask',taskToEdit)
+      this.$emit('closeModal')
+    },
+    closeModal(){
       this.$emit('closeModal')
     }
   },
