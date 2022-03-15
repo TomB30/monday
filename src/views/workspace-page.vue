@@ -40,7 +40,6 @@ export default {
       socketService.emit('board updated', this.selectedBoard)
     },
     boardUpdated(board){
-      console.log('board updated',board);
       this.$store.commit({type:'setBoard', board})
     },
     setFilter(filterBy){

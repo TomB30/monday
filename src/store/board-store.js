@@ -65,9 +65,10 @@ export const boardStore = {
                 console.log(`Couldn't load board ${boardId}`);
             }
         },
-        async updateBoard({ commit, state }, { board }) {
+        async updateBoard({ commit, state, rootGetters }, { board }) {
             const prevBoard = state.selectedBoard
             commit({ type: 'setBoard', board })
+            if(rootGetters.loggedInUser.email === 'guest@guest.com') return
             try {
                 const updatedBoard = await boardService.save(board)
                 return updatedBoard

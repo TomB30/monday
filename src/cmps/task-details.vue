@@ -1,6 +1,6 @@
 <template>
-  <section class="task-details" v-if="task">
-    <i class="icon-x" @click="$router.push('/workspace')"></i>
+  <section class="task-details" v-close="closeDetails" v-if="task">
+    <i class="icon-x" @click="closeDetails"></i>
     <header>
       <h2>{{ task.title }}</h2>
       <nav>
@@ -31,6 +31,9 @@ export default {
     };
   },
   methods: {
+    closeDetails(){
+      this.$router.push('/workspace')
+    },
     setTask() {
       this.$store.dispatch({
         type: "setTask",
