@@ -11,7 +11,7 @@
       <span
         contenteditable
         @blur="setVal('title', $event.target.innerText)"
-        @keyup.enter.prevent="$event.target.blur()"
+        @keydown.enter.prevent="$event.target.blur()"
         >{{ task.title }}</span
       >
     </div>

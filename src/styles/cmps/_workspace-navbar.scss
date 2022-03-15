@@ -51,16 +51,31 @@
         padding: 16px 0;
         .board-btn {
             @include divToBtn();
-            padding-left: 6px;
+            padding:0 6px;
             margin-bottom: 5px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             line-height: 31px;
+            > div {
+                @include fc();
+            }
             img {
                 margin-right: 4px;
             }
             &.selected {
                 background-color: #cce5ff;
+            }
+            i {
+                display: none;
+                margin-bottom: -12px;
+                padding: unset;
+                cursor: pointer;
+            }
+            &:hover {
+                i {
+                    display: block;
+                }
             }
         }
     }

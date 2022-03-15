@@ -24,7 +24,6 @@ export const boardStore = {
             state.currTask = task
         },
         setBoards(state, { boards }) {
-            console.log('hi');
             state.boards = boards
         },
         setBoard(state, { board }) {
@@ -39,6 +38,10 @@ export const boardStore = {
         addBoard(state, {savedBoard}){
             state.boards.push(savedBoard)
             state.selectedBoard = savedBoard
+        },
+        removeBoard(state, {boardId}){
+            const idx = state.boards.findIndex(b => b._id === boardId)
+            if(idx !== -1) state.boards.splice(idx,1)
         }
     },
     actions: {
@@ -85,6 +88,16 @@ export const boardStore = {
                return savedBoard
             } catch(err){
                 console.log(err, 'Failed to create board');
+            }
+        },
+        async removeBoard({commit,state},{boardId}){
+            const prevBoards = state.boards
+            try{
+                await boardService.removeBoard(boardId)
+                commit({type:'removeBoard',boardId})
+            } catch(err){
+                console.log('Failed to delete board');
+                commit({type:'setBoards', boards:prevBoards})
             }
         }
     }

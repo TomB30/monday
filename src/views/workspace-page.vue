@@ -1,6 +1,6 @@
 <template>
   <section class="workspace-page" v-if="selectedBoard">
-    <workspace-navbar @createBoard="createBoard" @setBoard="setBoard" />
+    <workspace-navbar @createBoard="createBoard" @removeBoard="removeBoard" @setBoard="setBoard" />
     <section class="board-container">
       <board-header  @setVal="updateBoard" :boardMembers="selectedBoard.members" />
       <board-toolbar @addTask="addTask" @setFilter="setFilter" />
@@ -51,6 +51,9 @@ export default {
     setBoard(boardId){
       console.log('boardId',boardId);
       this.$store.commit('setBoardById',boardId)
+    },
+    removeBoard(boardId){
+      this.$store.dispatch({type:'removeBoard',boardId})
     }
   },
   computed:{

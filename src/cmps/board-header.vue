@@ -2,7 +2,7 @@
   <section class="board-header-container">
     <header class="board-header">
       <div class="title-container">
-        <h1 contenteditable class="board-title" @blur="changeTitle">{{boardTitle}}</h1>
+        <h1 contenteditable class="board-title" @keydown.enter.prevent="$event.target.blur()" @blur="changeTitle">{{boardTitle}}</h1>
         <i :class="infoIconClass" @click="toggleDesc"></i>
         <i class="icon-star"></i>
       </div>

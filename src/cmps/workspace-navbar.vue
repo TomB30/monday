@@ -25,22 +25,28 @@
             class="board-btn"
             :class="board._id === selectedBoardId ? 'selected' : ''"
           >
+          <div>
             <img src="@/assets/icons/board-icon.png" alt="" /><span>{{
               board.title
             }}</span>
           </div>
+            <i class="icon-ellipsis" @click.stop="setModal($event,board._id)"></i>
+          </div>
         </section>
       </template>
+      <board-modal v-if="modalInfo" :info="modalInfo" @removeBoard="removeBoard" @closeModal="setModal"></board-modal>
   </nav>
 </template>
 
 <script>
+import boardModal from './modals/board-modal.vue'
 export default {
   data() {
     return {
       isOpen: false,
       selectedBoardId: null,
       boards: null,
+      modalInfo: null
     };
   },
   methods: {
@@ -52,6 +58,15 @@ export default {
     },
     setBoard(boardId){
       this.$emit('setBoard',boardId)
+    },
+    setModal(ev,boardId){
+      if(!boardId) return this.modalInfo = null
+      this.modalInfo = {ev, boardId}
+      console.log('this.modalInfo:',this.modalInfo);
+    },
+    removeBoard(boardId){
+      this.$emit('removeBoard',boardId)
+      this.setModal()
     }
   },
   computed: {
@@ -67,6 +82,9 @@ export default {
     username(){
       return this.$store.getters.loggedInUser.fullname.split(' ')[0]
     }
+  },
+  components:{
+    boardModal
   },
   watch: {
     "$store.getters.selectedBoard": {

@@ -12,7 +12,8 @@ export const boardService = {
     getEmptyTask,
     loadBoards,
     save,
-    getBoardById
+    getBoardById,
+    removeBoard
 }
 
 function loadBoards(userId) {
@@ -35,6 +36,10 @@ function getBoardById(boardId) {
 function save(board) {
     if (board._id) return httpService.put(endpoint, { board })
     else return httpService.post(endpoint, { board })
+}
+
+function removeBoard(boardId){
+    return httpService.delete(endpoint+boardId)
 }
 
 
