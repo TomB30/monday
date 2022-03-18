@@ -1,6 +1,6 @@
 <template>
   <section class="group-preview">
-    <div class="arrow-btn" :style="buttonStyle" @click="openModal"></div>
+    <div class="arrow-btn" :style="buttonStyle" @click="openModal($event,'group-modal')"></div>
     <div class="group-table">
       <div class="titles">
         <div class="group-title" :style="{ color: group.color }">
@@ -44,7 +44,7 @@
             ></div>
           </div>
         </draggable>
-        <div class="add-column-btn">
+        <div class="add-column-btn" @click="openModal($event,'column-modal')">
           <i class="icon-plus-big"></i>
         </div>
       </div>
@@ -101,6 +101,7 @@ import draggable from "vuedraggable";
 
 export default {
   props: {
+    groups: Array,
     group: Object,
     cmpsOrder: Array,
   },
@@ -138,8 +139,8 @@ export default {
     updateGroup() {
       this.$emit("updateGroup", this.groupToEdit);
     },
-    openModal(ev) {
-      this.$emit("openModal", ev);
+    openModal(ev,type) {
+      this.$emit("openModal", {ev,type});
     },
     updateTask(task,isModal) {
       this.groupToEdit.tasks = this.groupToEdit.tasks.map((t) =>

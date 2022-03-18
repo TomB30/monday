@@ -10,7 +10,7 @@
         background-color: #f5f6f8;
         
         &:hover {
-            background-color: #e6e9ef;
+            background-color: $btnBg;
         }
         
         .task-title {
@@ -38,7 +38,7 @@
                 }
             }
 
-            @media (max-width: 1200px) {
+            @media (max-width: 1300px) {
                 min-width: 300px;
                 width: 300px;
                 text-overflow: ellipsis;

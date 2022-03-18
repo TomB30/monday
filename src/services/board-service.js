@@ -23,7 +23,6 @@ function loadBoards(userId) {
             const board = getEmptyBoard(true)
             return httpService.post(endpoint, { board }).then(board => [board])
         } else {
-            console.log(boards);
             return boards
         }
     })
@@ -243,7 +242,7 @@ function getEmptyBoard(isDemo) {
             }
         ],
         colors: ['#037f4c', '#00c875', '#9cd326', '#cab641', '#ffcb00', '#784bd1', '#a25ddc', '#0086c0', '#579bfc', '#bb3354', '#e2445c', '#ff158a', '#ff5ac4', '#ff642e', '#fdab3d', '#7f5347', '#c4c4c4', '#808080'],
-        cmpsOrder: [{ type: "status-picker", width: 130, minWidth: 90 }, { type: "member-picker", width: 140, minWidth: 100 }, { type: 'timeline-picker', width: 180, minWidth: 180 }, { type: "date-picker", width: 130, minWidth: 100 }],
+        cmpsOrder: [{ type: "status-picker", width: 130, minWidth: 90 }, { type: "member-picker", width: 140, minWidth: 100 }, { type: 'timeline-picker', width: 180, minWidth: 180 }],
         createdBy: userService.getLoggedInUser(),
         createdAt: Date.now()
     }

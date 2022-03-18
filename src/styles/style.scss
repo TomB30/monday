@@ -1,5 +1,7 @@
+@import './setup/variables';
 @import './setup/mixins';
 @import './setup/typography';
+
 @import './basics/icons';
 @import './basics/base';
 @import './basics/transitions';
@@ -21,7 +23,9 @@
 @import './cmps/columns/date-picker';
 @import './cmps/columns/status-picker';
 @import './cmps/columns/timeline-picker';
+@import './cmps/columns/check-picker';
 @import './cmps/modals/group-modal';
 @import './cmps/modals/member-modal';
 @import './cmps/modals/status-modal';
 @import './cmps/modals/board-members';
+@import './cmps/modals/column-modal';

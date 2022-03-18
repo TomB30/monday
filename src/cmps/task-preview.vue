@@ -40,6 +40,7 @@ import memberPicker from "./columns/member-picker.vue";
 import datePicker from "./columns/date-picker.vue";
 import statusPicker from "./columns/status-picker.vue";
 import timelinePicker from "./columns/timeline-picker.vue";
+import checkPicker from "./columns/check-picker.vue";
 
 export default {
   props: {
@@ -52,23 +53,24 @@ export default {
   },
   methods: {
     setParams() {
-      this.$emit("setParams", this.task.id);
+      this.$emit('setParams', this.task.id);
     },
     updateTask(updatedTask) {
-      this.$emit("updateTask", updatedTask);
+      this.$emit('updateTask', updatedTask);
     },
     openModal(ev, type) {
-      if (type === "timeline-picker" || type === "date-picker") return;
+      const modals = ['timeline-picker' , 'date-picker' , 'check-picker']
+      if (modals.includes(type)) return;
       const { x, y, height } = ev.target.getBoundingClientRect();
       const pos = { x, y: y + height + 5 };
       const modal = {
-        type: type.split("-")[0] + "-modal",
+        type: type.split('-')[0] + '-modal',
         pos,
         info: {
           task: this.task,
         },
       };
-      this.$emit("setModal", modal);
+      this.$emit('setModal', modal);
     },
     setVal(key, val) {
       const taskCopy = JSON.parse(JSON.stringify({ ...this.task, [key]: val }));
@@ -80,6 +82,7 @@ export default {
     statusPicker,
     datePicker,
     timelinePicker,
+    checkPicker
   },
 };
 </script>

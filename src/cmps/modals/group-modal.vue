@@ -2,7 +2,6 @@
   <section
     class="group-modal modal"
     :style="{ top: openPos.y + 'px', left: openPos.x + 'px' }"
-    
     v-close="closeModal"
   >
     <section class="modal-section">
@@ -63,7 +62,7 @@ export default {
       this.$emit("addGroup");
     },
     closeModal() {
-      this.$emit("openModal");
+      this.$emit("openModal",null);
     },
     removeGroup() {
       this.$emit("removeGroup");

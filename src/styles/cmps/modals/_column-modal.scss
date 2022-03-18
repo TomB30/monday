@@ -1,0 +1,32 @@
+.column-modal {
+    position: absolute;
+    
+    h3 {
+        color: rgb(156, 156, 156);
+        padding: 14px 0 0 14px ;
+    }
+    .column-list {
+        display: grid;
+        width: 300px;
+        grid-template-columns: 50% 50%;
+    }
+    
+    .column-preview {
+        @include divToBtn();
+        display: flex;
+        align-items: center;
+        padding: 6px;
+        letter-spacing: .3px;
+        margin-bottom:4px ;
+        &:nth-child(odd){
+            margin-right:4px ;
+        }
+        i {
+            margin-right: 8px;
+        }
+
+        &.selected {
+            background-color: $btnSelected;
+        }
+    }
+}

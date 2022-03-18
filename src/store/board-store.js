@@ -42,6 +42,7 @@ export const boardStore = {
         removeBoard(state, {boardId}){
             const idx = state.boards.findIndex(b => b._id === boardId)
             if(idx !== -1) state.boards.splice(idx,1)
+            state.selectedBoard = state.boards[0]
         }
     },
     actions: {

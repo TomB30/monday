@@ -55,14 +55,15 @@ export default {
     },
     createBoard(){
       this.$emit('createBoard')
+      this.toggleOpen()
     },
     setBoard(boardId){
       this.$emit('setBoard',boardId)
+      this.toggleOpen()
     },
     setModal(ev,boardId){
       if(!boardId) return this.modalInfo = null
       this.modalInfo = {ev, boardId}
-      console.log('this.modalInfo:',this.modalInfo);
     },
     removeBoard(boardId){
       this.$emit('removeBoard',boardId)

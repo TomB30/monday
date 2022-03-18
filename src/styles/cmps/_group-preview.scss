@@ -78,7 +78,7 @@
                         border: 1px dashed #c5c7d0;
                     }
                 }
-                @media (max-width:1200px) {
+                @media (max-width:1300px) {
                     min-width:300px;
                     width: 300px;
                     text-overflow: ellipsis;
@@ -127,7 +127,7 @@
                 input {
                     flex: 1;
                     padding: 2px 0px 3px 20px;
-                    border: 1px solid #e6e9ef;
+                    border: 1px solid $btnBg;
                     &:hover {
                         border-color: black;
                     }

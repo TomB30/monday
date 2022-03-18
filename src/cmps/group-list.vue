@@ -10,6 +10,7 @@
       <group-preview
         v-for="group in groups"
         :group="group"
+        :groups="groups"
         :cmpsOrder="board.cmpsOrder"
         :key="group.id"
         :ref="'group' + group.id"
@@ -21,9 +22,9 @@
     <div class="add-group" @click="addGroup" :style="{ color: newGroup.color }">
       <h2>+ Add new group</h2>
     </div>
-    <group-modal
+    <!-- <group-modal
       v-if="selectedGroup && groupModalPos"
-      :pos="groupModalPos"
+      :pos="modal.pos"
       :group="selectedGroup"
       :colors="board.colors"
       @addGroup="addGroup"
@@ -31,6 +32,24 @@
       @removeGroup="removeGroup"
       @renameGroup="focusGroupTitle"
     ></group-modal>
+    <column-modal
+      :pos="modal.pos"
+      :cmpsOrder="board.cmpsOrder"
+      @saveCmpsOrder="saveCmpsOrder"
+    ></column-modal> -->
+    <component
+      v-if="modal"
+      :is="modal.type"
+      :pos="modal.pos"
+      :group="selectedGroup"
+      :color="board.colors"
+      @addGroup="addGroup"
+      @openModal="openModal"
+      @removeGroup="removeGroup"
+      @renameGroup="focusGroupTitle"
+      :cmpsOrder="board.cmpsOrder"
+      @saveCmpsOrder="saveCmpsOrder"
+    ></component>
   </section>
 </template>
 
@@ -39,6 +58,7 @@ import { boardService } from "../services/board-service";
 import { utilService } from "../services/util-service";
 import groupPreview from "./group-preview.vue";
 import groupModal from "./modals/group-modal.vue";
+import columnModal from "./modals/column-modal.vue";
 import draggable from "vuedraggable";
 
 export default {
@@ -50,8 +70,10 @@ export default {
     return {
       newGroup: null,
       selectedGroup: null,
-      groupModalPos: null,
+      // groupModalPos: null,
+      modal: null,
       groupsToEdit: null,
+      isEditingColumn: null,
     };
   },
   methods: {
@@ -92,14 +114,22 @@ export default {
       const group = boardService.getEmptyGroup();
       this.newGroup = { ...group, color };
     },
-    openModal(ev, group) {
-      if (!group || (this.selectedGroup && this.selectedGroup.id === group.id))
+    openModal(payload, group) {
+      if (!payload) {
         this.selectedGroup = null;
-      else {
-        this.selectedGroup = group;
-        const { x, y, height } = ev.target.getBoundingClientRect();
-        this.groupModalPos = { x, y: y + height + 10 };
+        this.modal = null;
+        return;
       }
+      const { ev, type } = payload;
+      this.selectedGroup = group;
+      this.modal = {};
+      const { x, y, height } = ev.target.getBoundingClientRect();
+      this.modal.pos = { x, y: y + height + 10 };
+      this.modal.type = type;
+    },
+    toggleColumnModal(ev) {
+      if (!isEditingColumn) isEditingColumn = ev;
+      else isEditingColumn = null;
     },
     saveCmpsOrder(cmpsOrder) {
       this.$emit("updateBoard", "cmpsOrder", cmpsOrder);
@@ -115,6 +145,7 @@ export default {
     groupPreview,
     groupModal,
     draggable,
+    columnModal,
   },
   watch: {
     board: {
