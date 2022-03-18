@@ -5,18 +5,15 @@
     v-close="closeModal"
   >
     <section class="modal-section">
-      <div class="modal-item">
+      <div class="modal-item development">
         <img src="@/assets/icons/collapse-group.png" alt="" /><span
           >Collapse this group</span
         >
       </div>
-      <div class="modal-item">
+      <div class="modal-item development">
         <img src="@/assets/icons/collapse-group.png" alt="" /><span
           >Collapse all groups</span
         >
-      </div>
-      <div class="modal-item">
-        <i class="icon-select-all"></i><span>Select all items</span>
       </div>
     </section>
     <section class="modal-section">
@@ -26,19 +23,16 @@
       <div class="modal-item" @click="duplicateGroup">
         <i class="icon-duplicate"></i><span>Duplicate this group</span>
       </div>
-      <div class="modal-item">
-        <i class="icon-move-to"></i><span>Move to</span>
-      </div>
     </section>
     <section class="modal-section">
       <div class="modal-item" @click="renameGroup">
         <i class="icon-pencil"></i><span>Rename group</span>
       </div>
-      <div class="modal-item">
+      <div class="modal-item development">
           <i class="icon-circle" :style="{ color: group.color }"></i>
           <span>Change group color</span>
       </div>
-      <div class="modal-item">
+      <div class="modal-item development">
         <i class="icon-excel"></i><span>Export to excel</span>
       </div>
     </section>
@@ -60,18 +54,22 @@ export default {
   methods: {
     addGroup() {
       this.$emit("addGroup");
+      this.closeModal()
     },
     closeModal() {
       this.$emit("openModal",null);
     },
     removeGroup() {
       this.$emit("removeGroup");
+      this.closeModal()
     },
     duplicateGroup() {
       this.$emit("addGroup", this.group);
+      this.closeModal()
     },
     renameGroup() {
       this.$emit("renameGroup", this.group.id);
+      this.closeModal()
     },
   },
   computed: {

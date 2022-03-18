@@ -80,3 +80,8 @@ h6 {
 .sortable-ghost {
     opacity: 0.5;
 }
+
+.development {
+    opacity: 0.4;
+    cursor:not-allowed !important;
+}

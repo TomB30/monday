@@ -12,7 +12,7 @@
             <i class="icon-plus"></i>
             <span>Add</span>
           </div>
-          <div>
+          <div class="development"> 
             <i class="icon-search"></i>
             <span>Search</span>
           </div>

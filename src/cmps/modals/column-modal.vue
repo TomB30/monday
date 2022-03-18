@@ -41,21 +41,21 @@ export default {
           txt: "Status",
           width: 130,
           minWidth: 90,
-          iconClass: "icon-member",
+          iconClass: "icon-status",
         },
         {
           type: "timeline-picker",
           txt: "Timeline",
           width: 180,
           minWidth: 180,
-          iconClass: "icon-member",
+          iconClass: "icon-timeline",
         },
         {
           type: "date-picker",
           txt: "Date",
           width: 130,
           minWidth: 100,
-          iconClass: "icon-member",
+          iconClass: "icon-date",
         },
         {
           type: "check-picker",
@@ -86,6 +86,7 @@ export default {
       if (idx === -1) this.cmpsToEdit.push(column);
       else this.cmpsToEdit.splice(idx, 1);
       this.$emit("saveCmpsOrder", JSON.parse(JSON.stringify(this.cmpsToEdit)));
+      this.closeModal()
     },
     closeModal() {
       this.$emit("openModal", null);

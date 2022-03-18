@@ -6,7 +6,7 @@
     @media (max-width: 700px) {
         margin: 0 15px;
     }
-    > * {
+    > *:not(.modal) {
         @include fc();
         @include divToBtn();
         margin-inline-end: 6px;

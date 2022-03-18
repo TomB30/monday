@@ -80,3 +80,17 @@
 .icon-crown {
    @include mkIcon('\f266')
 }
+.icon-timeline {
+   @include mkIcon('\f464')
+}
+.icon-date {
+   @include mkIcon('\f46b')
+}
+.icon-status {
+   background-image: url('~@/assets/icons/status-icon.png');
+   background-size: contain;
+   background-repeat: no-repeat;
+   width: 16px;
+   height: 16px;
+   margin-bottom: -5px;
+}
