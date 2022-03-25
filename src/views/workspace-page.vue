@@ -32,7 +32,6 @@ import { socketService } from "../services/socket.service";
 export default {
   data() {
     return {
-      boardIds: null,
       selectedBoard: null,
       filterBy: null,
     };
@@ -60,7 +59,6 @@ export default {
       this.$store.dispatch("createBoard");
     },
     setBoard(boardId) {
-      console.log("boardId", boardId);
       this.$store.commit("setBoardById", boardId);
     },
     removeBoard(boardId) {
@@ -73,13 +71,14 @@ export default {
       const groups = JSON.parse(JSON.stringify(this.selectedBoard.groups));
       return groups
         .map((g) => {
-          g.tasks = g.tasks.filter((t) => {
+          g.tasks = g.tasks
+          .filter((t) => {
             if (!this.filterBy.txt) return true;
             const regex = new RegExp(this.filterBy.txt, "i");
             return regex.test(t.title);
           })
-          .filter(t => {
-            if(!this.filterBy.members.length) return t
+          .filter((t) => {
+            if(!this.filterBy.members.length) return true
             return t.members.some(m => this.filterBy.members.includes(m._id))
           })
           return g;
@@ -92,12 +91,14 @@ export default {
       if (!this.$store.getters.loggedInUser) return this.$router.push("/login");
       await this.$store.dispatch("loadBoards");
       await this.$store.dispatch("loadUsers");
-      this.boardIds = this.$store.getters.boards;
       this.selectedBoard = this.$store.getters.selectedBoard;
       socketService.on("board updated", this.boardUpdated);
     } catch (err) {
       console.log(`could't load board`, err);
     }
+  },
+  destroyed(){
+    socketService.off("board updated", this.boardUpdated);
   },
   components: {
     workspaceNavbar,

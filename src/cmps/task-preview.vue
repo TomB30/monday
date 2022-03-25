@@ -1,8 +1,8 @@
 <template>
   <div class="task-preview">
-    <!-- <div class="task-options" >
+    <div class="task-options" title="Delete task" @click="removeTask">
       <i class="icon-down-arrow"></i>
-    </div> -->
+    </div>
     <div class="task-title" @click.self="setParams">
       <div
         :style="{ 'background-color': groupColor }"
@@ -57,6 +57,9 @@ export default {
     },
     updateTask(updatedTask) {
       this.$emit('updateTask', updatedTask);
+    },
+    removeTask(){
+      this.$emit('removeTask',this.task.id)
     },
     openModal(ev, type) {
       const modals = ['timeline-picker' , 'date-picker' , 'check-picker']

@@ -12,8 +12,9 @@
     <p>Filter items by person</p>
     <div class="member-list">
       <div
-        v-for="member in members"
+        v-for="(member,idx) in members"
         :key="member._id"
+        :class="{'selected' : selectedMembers[idx]}"
         @click="selectMember(member._id)"
       >
         <avatar
@@ -31,6 +32,7 @@ import avatar from "vue-avatar";
 export default {
   props: {
     modal: Object,
+    filterMembers:Array
   },
   data() {
     return {
@@ -61,6 +63,9 @@ export default {
     members() {
       return this.$store.getters.selectedBoard?.members;
     },
+    selectedMembers(){
+      return this.members.map(m => this.filterMembers.includes(m._id))
+    }
   },
 };
 </script>

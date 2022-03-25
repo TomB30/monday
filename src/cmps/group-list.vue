@@ -15,6 +15,7 @@
         :key="group.id"
         :ref="'group' + group.id"
         @updateGroup="updateGroup"
+        @updateGroups="updateGroups"
         @openModal="openModal($event, group)"
         @saveCmpsOrder="saveCmpsOrder"
       ></group-preview>
@@ -109,7 +110,7 @@ export default {
       this.updateGroups();
     },
     prepareNewGroup() {
-      const randomIdx = utilService.getRandomInt(0, this.board.colors.length);
+      const randomIdx = utilService.getRandomInt(0, this.board.colors.length-1);
       const color = this.board.colors[randomIdx];
       const group = boardService.getEmptyGroup();
       this.newGroup = { ...group, color };
@@ -135,6 +136,7 @@ export default {
       this.$emit("updateBoard", "cmpsOrder", cmpsOrder);
     },
     updateGroups() {
+      console.log('updateGroups', this.groupsToEdit);
       this.$emit("updateBoard", "groups", this.groupsToEdit);
     },
   },
@@ -156,22 +158,5 @@ export default {
       deep: true,
     },
   },
-  // directives: {
-  //   "click-outside": {
-  //     bind: function (el, binding, vnode) {
-  //       el.clickOutsideEvent = function (event) {
-  //         // here I check that click was outside the el and his children
-  //         if (!(el == event.target || el.contains(event.target))) {
-  //           // and if it did, call method provided in attribute value
-  //           vnode.context[binding.expression](event);
-  //         }
-  //       };
-  //       document.body.addEventListener("click", el.clickOutsideEvent);
-  //     },
-  //     unbind: function (el) {
-  //       document.body.removeEventListener("click", el.clickOutsideEvent);
-  //     },
-  //   },
-  // },
 };
 </script>

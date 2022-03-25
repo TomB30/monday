@@ -1,5 +1,5 @@
 <template>
-  <section class="status-picker" :style="{'background-color':statusColor}">
+  <section class="status-picker" :style="statusColor">
     {{statusTxt}}
   </section>
 </template>
@@ -14,7 +14,7 @@ export default {
       return this.task.status?.txt ? this.task.status.txt : ''
     },
     statusColor(){
-      return this.task.status?.color ? this.task.status.color : ''
+      return this.task.status?.color ? {'background-color': this.task.status.color} : ''
     }
   }
 }

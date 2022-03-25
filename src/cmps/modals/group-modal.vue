@@ -74,9 +74,9 @@ export default {
   },
   computed: {
     openPos() {
-      if (this.pos.y + 388 < window.innerHeight) return this.pos;
-      const diff = this.pos.y + 388 - innerHeight;
-      const newPos = { x: this.pos.x, y: this.pos.y - 388 - 35 };
+      if (this.pos.y + 324 < window.innerHeight) return this.pos;
+      const diff = this.pos.y + 324 - innerHeight;
+      const newPos = { x: this.pos.x, y: this.pos.y - 324 - 35 };
       return newPos;
     },
   },

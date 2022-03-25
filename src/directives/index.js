@@ -6,6 +6,7 @@ Vue.directive('close', {
             var { left, top, width, height } = el.getBoundingClientRect()
             if (!(clientX > left && clientX < left + width && clientY > top && clientY < top + height)) {
                 context[expression]()
+            
             }
         }
         setTimeout(() => {

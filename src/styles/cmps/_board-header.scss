@@ -76,6 +76,8 @@
 }
 
 .board-desc {
+    transition: height .3s;
+    height: 23px;
     margin: 1px 34px;
     color: #676879;
     font-size: 14px;

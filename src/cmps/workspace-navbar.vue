@@ -3,72 +3,80 @@
     <div class="collapse-btn" @click="toggleOpen">
       <i :class="iconClass"></i>
     </div>
-      <template v-if="isOpen">
-        <div class="workspace-name">
-          <h3>{{username}}'s workspace</h3>
+    <template v-if="isOpen">
+      <div class="workspace-name">
+        <h3>{{ username }}'s workspace</h3>
+      </div>
+      <section class="navbar-btns">
+        <div @click="createBoard">
+          <i class="icon-plus"></i>
+          <span>Add</span>
         </div>
-        <section class="navbar-btns">
-          <div @click="createBoard">
-            <i class="icon-plus"></i>
-            <span>Add</span>
-          </div>
-          <div class="development"> 
-            <i class="icon-search"></i>
-            <span>Search</span>
-          </div>
-        </section>
-        <section class="board-btns">
+        <div title="In Development" class="input-container">
+          <i class="icon-search"></i>
+          <input type="text" placeholder="Search" v-model="filterBy" />
+        </div>
+      </section>
+      <section class="board-btns">
           <div
-            v-for="board in boards"
+            v-for="board in boardsForDisplay"
             :key="board._id"
             @click="setBoard(board._id)"
             class="board-btn"
             :class="board._id === selectedBoardId ? 'selected' : ''"
           >
-          <div>
-            <img src="@/assets/icons/board-icon.png" alt="" /><span>{{
-              board.title
-            }}</span>
+            <div>
+              <img src="@/assets/icons/board-icon.png" alt="" /><span>{{
+                board.title
+              }}</span>
+            </div>
+            <i
+              class="icon-ellipsis"
+              @click.stop="setModal($event, board._id)"
+            ></i>
           </div>
-            <i class="icon-ellipsis" @click.stop="setModal($event,board._id)"></i>
-          </div>
-        </section>
-      </template>
-      <board-modal v-if="modalInfo" :info="modalInfo" @removeBoard="removeBoard" @closeModal="setModal"></board-modal>
+      </section>
+    </template>
+    <board-modal
+      v-if="modalInfo"
+      :info="modalInfo"
+      @removeBoard="removeBoard"
+      @closeModal="setModal"
+    ></board-modal>
   </nav>
 </template>
 
 <script>
-import boardModal from './modals/board-modal.vue'
+import boardModal from "./modals/board-modal.vue";
 export default {
   data() {
     return {
       isOpen: false,
       selectedBoardId: null,
       boards: null,
-      modalInfo: null
+      modalInfo: null,
+      filterBy: "",
     };
   },
   methods: {
     toggleOpen() {
       this.isOpen = !this.isOpen;
     },
-    createBoard(){
-      this.$emit('createBoard')
-      this.toggleOpen()
+    createBoard() {
+      this.$emit("createBoard");
     },
-    setBoard(boardId){
-      this.$emit('setBoard',boardId)
-      this.toggleOpen()
+    setBoard(boardId) {
+      this.$emit("setBoard", boardId);
+      this.toggleOpen();
     },
-    setModal(ev,boardId){
-      if(!boardId) return this.modalInfo = null
-      this.modalInfo = {ev, boardId}
+    setModal(ev, boardId) {
+      if (!boardId) return (this.modalInfo = null);
+      this.modalInfo = { ev, boardId };
     },
-    removeBoard(boardId){
-      this.$emit('removeBoard',boardId)
-      this.setModal()
-    }
+    removeBoard(boardId) {
+      this.$emit("removeBoard", boardId);
+      this.setModal();
+    },
   },
   computed: {
     iconClass() {
@@ -80,12 +88,17 @@ export default {
     selectedBoard() {
       return this.$store.getters.selectedBoard?._id;
     },
-    username(){
-      return this.$store.getters.loggedInUser.fullname.split(' ')[0]
-    }
+    username() {
+      return this.$store.getters.loggedInUser.fullname.split(" ")[0];
+    },
+    boardsForDisplay() {
+      if (!this.boards) return;
+      const regex = new RegExp(this.filterBy, "i");
+      return this.boards.filter((b) => regex.test(b.title));
+    },
   },
-  components:{
-    boardModal
+  components: {
+    boardModal,
   },
   watch: {
     "$store.getters.selectedBoard": {

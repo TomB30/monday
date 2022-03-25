@@ -12,25 +12,26 @@
         @input="setFilter"
       />
     </div>
-    <div @click="openModal($event, 'member-filter')">
+    <div :class="filteredClass" @click="openModal($event, 'member-filter')">
       <div class="icon-container">
         <i class="icon-member" />
       </div>
       <span>Person</span>
+      <i class="icon-x" @click.stop="memberFilter(null)"></i>
     </div>
-    <div class="development">
+    <div title="In Development" class="development">
       <div class="icon-container">
         <i class="icon-filter" />
       </div>
       <span class="filter">Filter</span>
     </div>
-    <div class="development">
+    <div title="In Development" class="development">
       <div class="icon-container">
         <i class="icon-sort" />
       </div>
       <span>Sort</span>
     </div>
-    <component v-if="modal" :is="modal.type" :modal="modal" @openModal="openModal" @memberFilter="memberFilter"></component>
+    <component v-if="modal" :filterMembers="filterBy.members" :is="modal.type" :modal="modal" @openModal="openModal" @memberFilter="memberFilter"></component>
     <!-- <member-filter :modal="modal"></member-filter> -->
   </section> 
 </template>
@@ -74,5 +75,10 @@ export default {
       this.$emit('setFilter', { ...this.filterBy });
     },
   },
+  computed:{
+    filteredClass(){
+      return this.filterBy.members?.length ? 'selected' : ''
+    }
+  }
 };
 </script>

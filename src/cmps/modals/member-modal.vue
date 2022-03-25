@@ -2,7 +2,7 @@
   <section
     ref="member-modal"
     class="member-modal modal"
-    :style="{ top: pos.y + 'px', left: midPos + 'px' }"
+    :style="{ top: openPos + 'px', left: midPos + 'px' }"
     v-close="closeModal"
   >
     <div class="task-members">
@@ -61,6 +61,10 @@ export default {
           );
         })
         .filter((member) => regex.test(member.fullname));
+    },
+    openPos() {
+      if (this.pos.y + 300 < window.innerHeight) return this.pos.y;
+      return this.pos.y - 300 - 40
     },
   },
   methods: {

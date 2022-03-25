@@ -1,6 +1,10 @@
 <template>
   <section class="group-preview">
-    <div class="arrow-btn" :style="buttonStyle" @click="openModal($event,'group-modal')"></div>
+    <div
+      class="arrow-btn"
+      :style="buttonStyle"
+      @click="openModal($event, 'group-modal')"
+    ></div>
     <div class="group-table">
       <div class="titles">
         <div class="group-title" :style="{ color: group.color }">
@@ -9,7 +13,14 @@
             src="@/assets/icons/drag-handle.png"
             alt=""
           />
-          <div class="group-title-input" ref="groupTitle" @keydown.enter.prevent="$event.target.blur()" contenteditable @blur="updateTitle" @keyup.enter="$event.target.blur()">
+          <div
+            class="group-title-input"
+            ref="groupTitle"
+            @keydown.enter.prevent="$event.target.blur()"
+            contenteditable
+            @blur="updateTitle"
+            @keyup.enter="$event.target.blur()"
+          >
             {{ group.title }}
           </div>
         </div>
@@ -36,7 +47,10 @@
               src="@/assets/icons/drag-handle.png"
               alt=""
             />
-            {{ cmp.type.split("-")[0].charAt(0).toUpperCase()+cmp.type.split("-")[0].substr(1) }}
+            {{
+              cmp.type.split("-")[0].charAt(0).toUpperCase() +
+              cmp.type.split("-")[0].substr(1)
+            }}
             <div
               class="resize-border"
               @mousedown="setResizing($event, idx)"
@@ -44,7 +58,7 @@
             ></div>
           </div>
         </draggable>
-        <div class="add-column-btn" @click="openModal($event,'column-modal')">
+        <div class="add-column-btn" @click="openModal($event, 'column-modal')">
           <i class="icon-plus-big"></i>
         </div>
       </div>
@@ -52,7 +66,7 @@
         class="task-list"
         group="tasks"
         v-model="groupToEdit.tasks"
-        @end="updateGroup"
+        @end="updateGroups"
         draggable=".task-preview"
         animation="400"
       >
@@ -63,6 +77,7 @@
           :task="task"
           :key="task.id"
           @updateTask="updateTask"
+          @removeTask="removeTask"
           @setModal="setModal($event, task)"
           @setParams="setParams"
         ></task-preview>
@@ -86,7 +101,7 @@
       :is="modal.type"
       :pos="modal.pos"
       :task="modal.task"
-      @updateTask="updateTask($event,true)"
+      @updateTask="updateTask($event, true)"
       @closeModal="setModal"
     ></component>
   </section>
@@ -116,9 +131,10 @@ export default {
     };
   },
   methods: {
-    setParams(taskId){
-      if(this.$route.params.taskId === taskId) return this.$router.push('/workspace')
-      this.$router.push(`/workspace/${this.group.id}/${taskId}`)
+    setParams(taskId) {
+      if (this.$route.params.taskId === taskId)
+        return this.$router.push("/workspace");
+      this.$router.push(`/workspace/${this.group.id}/${taskId}`);
     },
     addTask() {
       const taskToAdd = {
@@ -131,7 +147,7 @@ export default {
       this.updateGroup();
     },
     updateTitle(ev) {
-      if(this.groupToEdit.title === ev.target.innerText) return
+      if (this.groupToEdit.title === ev.target.innerText) return;
       const groupTitle = ev.target.innerText;
       this.groupToEdit.title = groupTitle;
       this.updateGroup();
@@ -139,14 +155,23 @@ export default {
     updateGroup() {
       this.$emit("updateGroup", this.groupToEdit);
     },
-    openModal(ev,type) {
-      this.$emit("openModal", {ev,type});
+    updateGroups() {
+      this.$emit("updateGroups");
     },
-    updateTask(task,isModal) {
+    openModal(ev, type) {
+      this.$emit("openModal", { ev, type });
+    },
+    updateTask(task, isModal) {
       this.groupToEdit.tasks = this.groupToEdit.tasks.map((t) =>
         t.id === task.id ? task : t
       );
-      if(isModal) this.modal.task = task
+      if (isModal) this.modal.task = task;
+      this.updateGroup();
+    },
+    removeTask(taskId) {
+      this.groupToEdit.tasks = this.groupToEdit.tasks.filter(
+        (t) => t.id !== taskId
+      );
       this.updateGroup();
     },
     setResizing({ type, x, offsetX }, idx) {
@@ -166,17 +191,14 @@ export default {
       // this.saveCmpsOrder();
     },
     saveCmpsOrder() {
-      this.$emit(
-        "saveCmpsOrder",
-        this.cmpsOrderToEdit
-      );
+      this.$emit("saveCmpsOrder", this.cmpsOrderToEdit);
     },
     setModal(modal, task) {
       if (
         !modal ||
-        this.modal &&
-        this.modal.task.id === task.id &&
-        this.modal.type === modal.type
+        (this.modal &&
+          this.modal.task.id === task.id &&
+          this.modal.type === modal.type)
       ) {
         this.modal = null;
         return;
@@ -201,11 +223,11 @@ export default {
       handler(newVal, oldVal) {
         this.cmpsOrderToEdit = JSON.parse(JSON.stringify(newVal));
       },
-      immediate:true
+      immediate: true,
     },
     group: {
       handler(newVal) {
-        this.groupToEdit = JSON.parse(JSON.stringify(this.group));
+        this.groupToEdit = newVal;
       },
       deep: true,
       immediate: true,

@@ -5,20 +5,46 @@
         color: #666;
         display: flex;
         line-height: 34px;
+        position: relative;
         text-align: center;
         transition: background-color 0.2s;
         background-color: #f5f6f8;
-        
-        &:hover {
-            background-color: $btnBg;
+
+        .task-options {
+            @include fc();
+            @include divToBtn();
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: -24px;
+            top: 8px;
+            opacity: 0;
+            i {
+                font-size: 11px;
+                line-height: 21px;
+                &::after {
+                    line-height: 21px;
+                }
+            }
         }
-        
+
+        &:hover {
+            .task-title,
+            .task-info {
+                // background-color: #e6e9ef;
+                background-color: $btnBg;
+            }
+            .task-options {
+                opacity: 1;
+            }
+        }
+
         .task-title {
             min-width: 400px;
             text-align: left;
             display: flex;
             position: sticky;
-            left:22px;
+            left: 22px;
             z-index: 1;
             background-color: #f5f6f8;
             .left-border {
@@ -30,6 +56,9 @@
                 padding: 0 16px 0 0;
                 border: 1px solid transparent;
                 border-radius: 4px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
                 &:hover {
                     border: 1px solid #c5c7d0;
                 }
@@ -41,12 +70,10 @@
             @media (max-width: 1300px) {
                 min-width: 300px;
                 width: 300px;
-                text-overflow: ellipsis;
             }
             @media (max-width: 1200px) {
                 min-width: 200px;
                 width: 200px;
-                text-overflow: ellipsis;
             }
         }
         .info-container {

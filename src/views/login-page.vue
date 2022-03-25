@@ -32,8 +32,8 @@
         <button>{{ mainBtn }}</button>
       </form>
       <template v-else>
-      <h2 >Welcome {{loggedUser.fullname}}</h2>
-      <button @click="logout">Logout</button>
+        <h2>Welcome {{ loggedUser.fullname }}</h2>
+        <button @click="logout">Logout</button>
       </template>
     </main>
     <aside>
@@ -56,7 +56,7 @@ export default {
         password: "",
         passwordConfirm: "",
       },
-      loggedUser:null
+      loggedUser: null,
     };
   },
   methods: {
@@ -65,22 +65,20 @@ export default {
     },
     sendCreds() {
       if (this.isLogin) {
-        this.login()
+        this.login();
       } else {
-        if (!this.checkPass()) return
-        this.signup()
+        if (!this.checkPass()) return;
+        this.signup();
       }
     },
-    async login(creds) {
-      const { email, password } = this.creds
-      this.isLoading = true
+    async login() {
+      this.isLoading = true;
       try {
         const user = await this.$store.dispatch({
           type: "login",
-          userCreds: { email, password },
+          userCreds: { ...this.creds },
         });
         this.resetCreds();
-        this.isLoading = false
       } catch (err) {
         console.log(err);
       } finally {
@@ -88,6 +86,7 @@ export default {
       }
     },
     async signup() {
+      this.isLoading = true;
       try {
         const user = await this.$store.dispatch({
           type: "signup",
@@ -96,27 +95,29 @@ export default {
         this.resetCreds();
       } catch (err) {
         console.log(err, "Failed to signup");
+      } finally {
+        this.isLoading = false;
       }
     },
-    async logout(){
+    async logout() {
       try {
-         await this.$store.dispatch({type:'logout'})
-      } catch(err){
-        console.log(err,'failed to logout');
+        await this.$store.dispatch({ type: "logout" });
+      } catch (err) {
+        console.log(err, "failed to logout");
       }
     },
     checkPass() {
-      console.log(this.creds.password === this.creds.passwordConfirm)
-      return this.creds.password === this.creds.passwordConfirm
+      console.log(this.creds.password === this.creds.passwordConfirm);
+      return this.creds.password === this.creds.passwordConfirm;
     },
-    resetCreds(){
+    resetCreds() {
       this.creds = {
         fullname: "",
         email: "",
         password: "",
         passwordConfirm: "",
-      }
-    }
+      };
+    },
   },
   computed: {
     mainBtn() {
@@ -137,13 +138,13 @@ export default {
         : "";
     },
   },
-  watch:{
-    '$store.getters.loggedInUser' : {
-      handler(newVal){
-        this.loggedUser = newVal
+  watch: {
+    "$store.getters.loggedInUser": {
+      handler(newVal) {
+        this.loggedUser = newVal;
       },
-      immediate:true
-    }
-  }
+      immediate: true,
+    },
+  },
 };
 </script>

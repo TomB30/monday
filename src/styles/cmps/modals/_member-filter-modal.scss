@@ -26,10 +26,13 @@
         display: flex;
         justify-content: flex-start;
         > * {
+            margin: 0 2px;
+            @include fc();
             border-radius: 50%;
-            width: 34px;
-            height: 34px;
             cursor: pointer;
+            &.selected{
+                border: 4px solid #d9f0ff;
+            }
         }
     }
 }

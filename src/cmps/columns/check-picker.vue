@@ -11,8 +11,7 @@ export default {
     },
     methods:{
         toggleCheck(){
-            const isCheck = this.task.isCheck ? false : true
-            this.$emit('setVal', 'isCheck', isCheck)
+            this.$emit('setVal', 'isCheck', !this.task.isCheck)
         }
     },
     computed:{

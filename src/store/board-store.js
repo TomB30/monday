@@ -46,9 +46,6 @@ export const boardStore = {
         }
     },
     actions: {
-        setTask({commit},{groupId,taskId}){
-            commit({type:'setTask',groupId,taskId})
-        },  
         async loadBoards({ commit, state ,rootGetters}) {
             try {
                 const userId = rootGetters.loggedInUser._id

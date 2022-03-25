@@ -35,7 +35,7 @@ export default {
       this.$router.push('/workspace')
     },
     setTask() {
-      this.$store.dispatch({
+      this.$store.commit({
         type: "setTask",
         groupId: this.groupId,
         taskId: this.taskId,

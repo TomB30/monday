@@ -15,17 +15,14 @@
     <div class="timeline-capsule">
       <template v-if="this.datesToEdit">
         <div
-          class="history"
-          :class="fullRangeClass"
           :style="{ width: datesPercentage + '%' , 'background-color':color}"
         ></div>
         <div
-          class="future"
-          :class="fullRangeClass"
+          class="time-left"
           :style="{ width: 100 - datesPercentage + '%' }"
         ></div>
       </template>
-      <span :style="spanColor">{{ datesText }}</span>
+      <span >{{ datesText }}</span>
     </div>
   </section>
 </template>
@@ -61,18 +58,6 @@ export default {
       }
       return "-";
     },
-    spanColor() {
-      if (!this.datesToEdit || !this.datesToEdit.length) {
-        return { color: "white" };
-      } else return;
-    },
-    fullRangeClass() {
-      const currDate = Date.now();
-      const totalDiff = this.datesToEdit[1] - this.datesToEdit[0];
-      const prevDiff = currDate - this.datesToEdit[0];
-      const percentage = (((prevDiff / totalDiff) * 100)).toFixed(0);
-      if (percentage >= 100 || percentage <= 0) return "full-border";
-    },
     datesPercentage() {
       const currDate = Date.now();
       const totalDiff = this.datesToEdit[1] - this.datesToEdit[0];
@@ -86,7 +71,7 @@ export default {
   watch:{
     task:{
       handler(newVal){
-        if(newVal.dates) this.datesToEdit = [...this.task.dates]
+        if(newVal.dates) this.datesToEdit = [...newVal.dates]
       },
       deep:true,
       immediate:true
